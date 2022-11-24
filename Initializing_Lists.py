@@ -156,6 +156,7 @@ for i in range(Combined_List_Length):
         print("")
         # if www.site.com/code=Combined_List[j] + str(k) is online, then append n store in txt
 
+#needs to have proper logic, and also needs to stop evaluating for aaaaaaa if its just starting. should go from a to 9, then aa to 9a, then keep increasing in size.
 
         # does it need multidimensional array or a simple array with 47 positioning that changes each index with the
         # next letter should do? #think of memory error too.
@@ -169,7 +170,6 @@ for i in range(Combined_List_Length):
 
         # Combined_List.append(Combined_List[j] + str(k))  # logic works, but gives memory error
 
-
         #to check Website_URL logic, indentation, similarities to Website_URL_Tests to see if data passing thru right.
         print("Website_URL_Tests = ", end="")
         for k in range(len(Website_URL_Tests)):
@@ -177,7 +177,6 @@ for i in range(Combined_List_Length):
             Website_URL = Website_URL + str(Website_URL_Tests[k])
         #print(Website_URL) #to check
             #store in a single variable to use as URL
-
 
         print()
         #
