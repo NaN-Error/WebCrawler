@@ -20,7 +20,7 @@ print()
 
 Big_List = Alphabet_Lowercase + Alphabet_Uppercase + Numbers_List
 
-Combined_List_Length = 47 
+Combined_List_Length = 10
 
 if os.path.isfile('Online.txt'):
     os.remove('Online.txt')
@@ -51,7 +51,7 @@ print("Count of arrays inside array:", len(array))
 print("___________________________________________________________________________________________________")
 
 print("___________________________________________START___________________________________________________")
-Website_URL_Tests = ["a"] * Combined_List_Length
+Website_URL_Tests = [""] * Combined_List_Length
 Website_URL = ""
 Iteration_Count = 0
 for i in range(Combined_List_Length):
@@ -74,7 +74,7 @@ for i in range(Combined_List_Length):
             print(Website_URL_Tests[k], end="")
             Website_URL = Website_URL + str(Website_URL_Tests[k])
         print()
-        url = "https://www.youtube.com/" + Website_URL + "="
+        url = "https://www.youtube.com/" + Website_URL #+ "="
         print("URL =", url)
 
         try:
@@ -86,7 +86,7 @@ for i in range(Combined_List_Length):
                 print("Site length =", Site_Length)
                 print("Site length type =", type(Site_Length))
 
-                if Site_Length > 1: #Stores only webpages that its lenght are more than 1. Relevant for me, do not change.
+                if Site_Length > 1: #Stores only webpages that its lenght are more than 1. Relevant for something I might do, do not change.
                     print("Contains relevant information.")
                     with open('Online.txt', 'a') as f:
                         f.write("Webpage: ")
