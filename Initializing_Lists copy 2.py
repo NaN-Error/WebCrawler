@@ -1,52 +1,18 @@
-# Purpose of this program:
-    # Check which webpages exist, using brute force.
-
-# __________________________________________COMMENTS_________________________________________________
-
-# To do:
-
-# Clean code
-# Create functions
-# Modulate
-# Expand program capabilities
-# Optimize efficiency
-    # Reevaluate processes used.
-    # multithread 
-
-# ___________________________________________________________________________________________________
+#Check which webpages exist, using brute force.
 
 import urllib.request
 import os
 import string
 import time  
-
 start = time.time()
 
-print("___________________________________________START___________________________________________________")
-print()
-
 Alphabet_Lowercase = list(string.ascii_lowercase)
-print(f"Lowercase List: {Alphabet_Lowercase}")
-print()
-
 Alphabet_Uppercase = list(string.ascii_uppercase)
-print(f"Uppercase List: {Alphabet_Uppercase}")
-print()
-
 Numbers_List = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-print(f"Number's List: {Numbers_List}")
-print()
-
 Big_List = Alphabet_Lowercase + Alphabet_Uppercase + Numbers_List
 
-Combined_List_Length = 47
 
-if os.path.isfile('Online.txt'):
-    os.remove('Online.txt')
-if os.path.isfile('UnhandledCodes.txt'):
-    os.remove('UnhandledCodes.txt')
-if os.path.isfile('UnhandledErrors.txt'):
-    os.remove('UnhandledErrors.txt')
+Combined_List_Length = 10
 
 array = [[0 for i in range(len(Big_List))] for i in range(Combined_List_Length)]
 
@@ -60,6 +26,7 @@ print("_________________________________________________________________________
 for i in range(Combined_List_Length):
     for j in range(len(Big_List)):
         array[i][j] = Big_List[j]
+        print(array[i][j])
 
 print("___________________________________________________________________________________________________")
 print("Items of arrays initialized")
@@ -72,17 +39,11 @@ print("___________________________________________START_________________________
 Website_URL_Tests = [""] * Combined_List_Length
 Website_URL = ""
 Iteration_Count = 0
-tracker = True
-i = 0
-
-while i <= Combined_List_Length:
-    i += 1
+for i in range(Combined_List_Length):
     print("___________________________________________________________________________________________________")
     print("From i = 0 to i =", Combined_List_Length - 1, " |  i =", i)
     print("___________________________________________________________________________________________________")
-    if tracker == True:
-        i = 0
-        tracker = False
+
     for j in range(len(Big_List)):
         Iteration_Count += 1
         print("")
@@ -91,17 +52,41 @@ while i <= Combined_List_Length:
         print("________")
         print("")
 
-        Website_URL_Tests[i] = array[i][j] #the first 6 out of the 47 might be aaaaaa.
-        #when this is adding whats on view in array, it adds nothing in other positions bc i and j are reinizialized. 
-        #how to keep up? look up in WURLTST, compare and initialize array as per WURLTSTS?
-        #array is like ram, WURLTST is like storage, and WURL is just the medium to facilitate transfer between storage and program.
-
+        Website_URL_Tests[i] = array[i][j]
+# from itertools import combinations
+ 
+# letters ="GeEKS"
+ 
+# # size of combination is set to 3
+# a = combinations(letters, 3) where 3 is a for that goes from 0 to 46 to increase the size of the combinations? with 1 combo is a-9, with 2 combo is and letters *2, etc?
+# y = [' '.join(i) for i in a]
+ 
+ 
+#this one makes more sense. instead of abc, its big_list, and instead of 2 is 47, so it looks up every single combination of BigList with lenght 47.
+#  def combinations_with_replacement(iterable, r):
+#     # combinations_with_replacement('ABC', 2) --> AA AB AC BB BC CC
+#     pool = tuple(iterable)
+#     n = len(pool)
+#     if not n and r:
+#         return
+#     indices = [0] * r
+#     yield tuple(pool[i] for i in indices)
+#     while True:
+#         for i in reversed(range(r)):
+#             if indices[i] != n - 1:
+#                 break
+#         else:
+#             return
+#         indices[i:] = [indices[i] + 1] * (r - i)
+#         yield tuple(pool[i] for i in indices)
+ 
+ 
+        print(y)
         print("Website_URL_Tests = ", end="")
         for k in range(len(Website_URL_Tests)):
             print(Website_URL_Tests[k], end="")
             Website_URL = Website_URL + str(Website_URL_Tests[k])
         print()
-        
         url = "https://www.youtube.com/" + Website_URL #+ "="
         print("URL =", url)
 
@@ -130,6 +115,7 @@ while i <= Combined_List_Length:
                     f.write(url)
                     f.write('\n')
                     f.close()
+
         except urllib.error.URLError as e: 
             print(e)
         except urllib.error.HTTPError as e: 
@@ -146,45 +132,6 @@ while i <= Combined_List_Length:
 
         Website_URL = ""
         print("___________________________________________________________________________________________________")
-        
-        if j == 61: #si llega al final, va al proximo array, si es 9 va al proximo array etc etc y si no es 9, aumenta 1 e i-- j =0 so on hasta que i =0
-            print("j indeed is equal to 61")
-            i += 1  #needs rest of code to go back clean etc, what is          
-            while Website_URL_Tests[i] == 9 and i < 47: #[i] is actually just the position of Website_URL_Test[i] and see if contents of that index == 9
-                i += 1 #im using i somewhere that is causing the loop to end at 47, at i end.
-                
-            #look up array [i][j] #if not 9, use a 
-            for l in range(len(Big_List)): #compares#to compare contents of array[i][j] with Website_URL_Test[i] and if same, then increases array[i][l+1] and stores it in Website_URL_Tests[i])
-                if Website_URL_Tests[i] == "":
-                    Website_URL_Tests[i] = "a"
-                    break #changed to b, didnt ran thru a first. move this to if inside for.
-                elif Website_URL_Tests[i] == array[i][l]: #compare contents of array[i][j] with Website_URL_Test[i] and if same, then 
-                    Website_URL_Tests[i] = array[i][l+1]#issue here is that WURLTSTS is initialized with "" so it doesnt have anything to compare with.
-                    print("Character to add: ", end="")
-                    print(Website_URL_Tests[i])
-                    
-                    print("Entire string: ", end="")    
-                    for k in range(len(Website_URL_Tests)):
-                        print(Website_URL_Tests[k], end="")
-                    break
-            while i != 0: #inizialize previous arrays to 0
-                i -= 1
-                Website_URL_Tests[i] = array[i][0] # decrease other 9's to index 0
-                print(f"\nValue of i: {Website_URL_Tests[i]}")
-                print("New string: ", end="")
-                for k in range(len(Website_URL_Tests)):
-                    print(Website_URL_Tests[k], end="")
-                print(f"\ni equals : {i}")
-                print(f"\nj equals : {j}")
-            else:
-                tracker = True #when is tracker false?
-                
-                    # may be put on i because j wouldnt be reset until it starts the j loop, or not bc i has changed already and cant do i+1== 9 test.
-                    #should I add variable to track when i should be 0 bc when it goes back to i, i becomes 1, so if theres a variable like a counter or tracker that here is added when
-                    #needs to be 0, ej Isfirst = true and there if tracker == true then i = 0
-                    #print("ok")
-                    
-                    #issue might be because U is 47 and it cannot increase more? has to be 62 tho.
 
 print()
 print("Count of items inside array 0:", len(array[0]))
@@ -193,4 +140,3 @@ print("Count of arrays inside array:", len(array))
 print()
 end = time.time()
 print("Time to compile:", round(end - start, 4), "seconds.")
-

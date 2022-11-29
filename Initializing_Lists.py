@@ -162,9 +162,15 @@ for i in range(Combined_List_Length):
         # next letter should do? #think of memory error too.
         #array easier to manage than a concatenated string. 1d array needed for simplicity.
         Website_URL_Tests[i] = array[i][j]
+        
+        
         #in i but out of j, goes to i and increases it, stores in website url test, and goest to j to retest everything
         #in j but with i changed in array and web ur test.
 
+# for i in [h]]:
+#     for j in [h]]:
+#         combined_list.append(i + j)
+# print(combined_list)
 
         #remember that the only thing you need is that WEbsite_URL_tests does what we want to, the end goal of url
 
