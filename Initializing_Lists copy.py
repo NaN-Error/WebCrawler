@@ -5,13 +5,14 @@
 
 # To do:
 
+# Comment code
 # Clean code
 # Create functions
 # Modulate
 # Expand program capabilities
 # Optimize efficiency
     # Reevaluate processes used.
-    # multithread 
+    # multithread (main function)
 
 # ___________________________________________________________________________________________________
 
@@ -25,6 +26,7 @@ start = time.time()
 print("___________________________________________START___________________________________________________")
 print()
 
+#this can be a main function to initialize characters to test. can be checkbox input for useer to select which ones to include in tests.
 Alphabet_Lowercase = list(string.ascii_lowercase)
 print(f"Lowercase List: {Alphabet_Lowercase}")
 print()
@@ -39,8 +41,13 @@ print()
 
 Big_List = Alphabet_Lowercase + Alphabet_Uppercase + Numbers_List
 
+
+#this can be a single user input, maybe in a textbox to define lenght of test.
 Combined_List_Length = 47
 
+#this can be a module dedicated to local file management. This module can have more functions to expand program capabilities. 
+# e.x. database. gui for link selection (calls db to get all links in a gui list.) this list could also give some extra information
+# about the link.
 if os.path.isfile('Online.txt'):
     os.remove('Online.txt')
 if os.path.isfile('UnhandledCodes.txt'):
@@ -48,6 +55,8 @@ if os.path.isfile('UnhandledCodes.txt'):
 if os.path.isfile('UnhandledErrors.txt'):
     os.remove('UnhandledErrors.txt')
 
+# The rest can be on main. One web module can be made for the url tests. Find recommendation in the next comments.
+# to initialize array.
 array = [[0 for i in range(len(Big_List))] for i in range(Combined_List_Length)]
 
 print("___________________________________________________________________________________________________")
@@ -72,9 +81,9 @@ print("___________________________________________START_________________________
 Website_URL_Tests = [""] * Combined_List_Length
 Website_URL = ""
 Iteration_Count = 0
+
 tracker = True
 i = 0
-
 while i <= Combined_List_Length:
     i += 1
     print("___________________________________________________________________________________________________")
@@ -91,7 +100,8 @@ while i <= Combined_List_Length:
         print("________")
         print("")
 
-        Website_URL_Tests[i] = array[i][j] #the first 6 out of the 47 might be aaaaaa.
+        Website_URL_Tests[i] = array[i][j] # Overlaying wURLTST over array2d 
+        #the first 6 out of the 47 might be aaaaaa.
         #when this is adding whats on view in array, it adds nothing in other positions bc i and j are reinizialized. 
         #how to keep up? look up in WURLTST, compare and initialize array as per WURLTSTS?
         #array is like ram, WURLTST is like storage, and WURL is just the medium to facilitate transfer between storage and program.
@@ -105,6 +115,19 @@ while i <= Combined_List_Length:
         url = "https://www.youtube.com/" + Website_URL #+ "="
         print("URL =", url)
 
+        # web test module function. This module can have more functions to expand program capabilities.
+        
+        # second function could be website download as pdf. (screen scraping)
+        
+        # webcrawl to id every webpage a website has, going thru all its links related to the website.
+            #can individually download each link as pdf or can also download every link.
+            
+        # could web crawl to id databases on website (webpage by webpage.) gets webpages, and databases it contains.
+            #can download all databases/database contents.
+            # could be all databases from a given webpage, or crawl all website and get all databases from all webpages.
+            
+        # main should give up a gui to ask user what function the program is going to execute. 
+            # brute force find webpages of a website, find all webpages of a website. find databases of webpage/website.
         try:
             r = urllib.request.urlopen(url)
             getcode_url = urllib.request.urlopen(url).getcode()
@@ -147,6 +170,8 @@ while i <= Combined_List_Length:
         Website_URL = ""
         print("___________________________________________________________________________________________________")
         
+        #this could be a main function to check if reached the end of the array.
+        
         if j == 61: #si llega al final, va al proximo array, si es 9 va al proximo array etc etc y si no es 9, aumenta 1 e i-- j =0 so on hasta que i =0
             print("j indeed is equal to 61")
             i += 1  #needs rest of code to go back clean etc, what is          
@@ -157,9 +182,14 @@ while i <= Combined_List_Length:
             for l in range(len(Big_List)): #compares#to compare contents of array[i][j] with Website_URL_Test[i] and if same, then increases array[i][l+1] and stores it in Website_URL_Tests[i])
                 if Website_URL_Tests[i] == "":
                     Website_URL_Tests[i] = "a"
+                    #this can be put outside of the for to optimize efficiency but needs initialize previous arrays to 0 function instead
+                    # of the break.
+                    #call function (inizialize previous arrays to 0)
                     break #changed to b, didnt ran thru a first. move this to if inside for.
                 elif Website_URL_Tests[i] == array[i][l]: #compare contents of array[i][j] with Website_URL_Test[i] and if same, then 
                     Website_URL_Tests[i] = array[i][l+1]#issue here is that WURLTSTS is initialized with "" so it doesnt have anything to compare with.
+                    #inside of for, but can be an if, instead of elif. needs == "" if to be changed as recommended.
+                    
                     print("Character to add: ", end="")
                     print(Website_URL_Tests[i])
                     
@@ -168,6 +198,8 @@ while i <= Combined_List_Length:
                         print(Website_URL_Tests[k], end="")
                     break
             while i != 0: #inizialize previous arrays to 0
+                #make this a function (inizialize previous arrays to 0)
+                #call function (inizialize previous arrays to 0)
                 i -= 1
                 Website_URL_Tests[i] = array[i][0] # decrease other 9's to index 0
                 print(f"\nValue of i: {Website_URL_Tests[i]}")
