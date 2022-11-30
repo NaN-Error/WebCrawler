@@ -13,6 +13,20 @@
 # Optimize efficiency
     # Reevaluate processes used.
     # multithread (main function)
+    
+    
+
+        # second function could be website download as pdf. (screen scraping)
+        
+        # webcrawl to id every webpage a website has, going thru all its links related to the website.
+            #can individually download each link as pdf or can also download every link.
+            
+        # could web crawl to id databases on website (webpage by webpage.) gets webpages, and databases it contains.
+            #can download all databases/database contents.
+            # could be all databases from a given webpage, or crawl all website and get all databases from all webpages.
+            
+        # main should give up a gui to ask user what function the program is going to execute. 
+            # brute force find webpages of a website, find all webpages of a website. find databases of webpage/website.
 
 # ___________________________________________________________________________________________________
 
@@ -117,17 +131,6 @@ while i <= Combined_List_Length:
 
         # web test module function. This module can have more functions to expand program capabilities.
         
-        # second function could be website download as pdf. (screen scraping)
-        
-        # webcrawl to id every webpage a website has, going thru all its links related to the website.
-            #can individually download each link as pdf or can also download every link.
-            
-        # could web crawl to id databases on website (webpage by webpage.) gets webpages, and databases it contains.
-            #can download all databases/database contents.
-            # could be all databases from a given webpage, or crawl all website and get all databases from all webpages.
-            
-        # main should give up a gui to ask user what function the program is going to execute. 
-            # brute force find webpages of a website, find all webpages of a website. find databases of webpage/website.
         try:
             r = urllib.request.urlopen(url)
             getcode_url = urllib.request.urlopen(url).getcode()
