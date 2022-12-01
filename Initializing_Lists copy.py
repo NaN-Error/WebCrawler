@@ -3,6 +3,10 @@
 
 # __________________________________________COMMENTS_________________________________________________
 
+# brainstorm possible ways of reaching the end goal
+# choose the most efficient, memory wise
+# visualize the data flow, then describe it, then program it.
+
 # To do:
 
 # Comment code
@@ -43,11 +47,15 @@ Alphabet_Uppercase = list(string.ascii_uppercase)
 print(f"Uppercase List: {Alphabet_Uppercase}")
 print()
 
-Numbers_List = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+Numbers_List = list(string.digits)
 print(f"Number's List: {Numbers_List}")
 print()
 
-Big_List = Alphabet_Lowercase + Alphabet_Uppercase + Numbers_List
+# Special_Characters = list(string.punctuation)
+# print(f"Special Characters List: {Numbers_List}")
+# print()
+
+Big_List = Alphabet_Lowercase + Alphabet_Uppercase + Numbers_List #+ Special_Characters
 
 
 #this can be a single user input, maybe in a textbox to define lenght of test.
