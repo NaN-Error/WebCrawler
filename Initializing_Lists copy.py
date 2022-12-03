@@ -14,6 +14,7 @@
 # Create functions
 # Modulate
 # Expand program capabilities
+    #gui
     # second function could be website download as pdf. 
     # webcrawl to id every webpage a website has, going thru all its links related to the website.
         #can individually download each link as pdf or can also download every link.
@@ -180,7 +181,7 @@ while i <= Combined_List_Length:
         if j == 61: #si llega al final, va al proximo array, si es 9 va al proximo array etc etc y si no es 9, aumenta 1 e i-- j =0 so on hasta que i =0
             print("j indeed is equal to 61")
             i += 1  #needs rest of code to go back clean etc, what is          
-            while Website_URL_Tests[i] == 9 and i < 47: #[i] is actually just the position of Website_URL_Test[i] and see if contents of that index == 9
+            while Website_URL_Tests[i] == 9 and i < Combined_List_Length: #[i] is actually just the position of Website_URL_Test[i] and see if contents of that index == 9
                 i += 1 #im using i somewhere that is causing the loop to end at 47, at i end.
                 
             #look up array [i][j] #if not 9, use a 
