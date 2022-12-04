@@ -1,10 +1,12 @@
-# module dedicated to local file management. This module can have more functions to expand program capabilities.
-from pathlib import Path #For Windows/Mac path compatibility
-import os #To check, create, and remove files from OS directories.
+# Module dedicated to local file management. This module can have more functions to expand program capabilities.
+from pathlib import Path # For Windows/Mac path compatibility
+import os # To check, create, and remove files from OS directories.
 
 Databases_Path = Path("Databases/")
 
-def Clear_Files():
+#Comment code
+
+def Clear_Files(): # Removes the txt files that contains all the URL's info. 
     if os.path.isfile(Databases_Path / 'Online.txt'):
         os.remove(Databases_Path / 'Online.txt')
     if os.path.isfile(Databases_Path / 'UnhandledCodes.txt'):

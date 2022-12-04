@@ -1,6 +1,10 @@
-import string #To get the characters and numbers to create the URLs.
+import string # To get the characters and numbers to create the URLs.
+from WebTest import Check_URL # Local module. To check each URL created, store the ones online, and store Web error messages, if any.
+import time # To get the execution time of the program.
 
-def E_Ploribus_Unum(): #function to initialize characters to test
+# Clean comments, clean Increase_To_Next_Option =="" option to reuse function.
+
+def E_Ploribus_Unum(): # Function to initialize characters to test
     #can be checkbox input for user to select which ones to include in tests.
     Alphabet_Lowercase = list(string.ascii_lowercase)
     print(f"Lowercase List: {Alphabet_Lowercase}")
@@ -18,10 +22,11 @@ def E_Ploribus_Unum(): #function to initialize characters to test
     print(f"Special Characters List: {Special_Characters}")
     print()
 
-    return Alphabet_Lowercase + Alphabet_Uppercase + Numbers_List  #+ Special_Characters #the elements that each Array2D of the multidimensiona Array2D will have.
     #test url lookup with special_characters
+    return Alphabet_Lowercase + Alphabet_Uppercase + Numbers_List  #+ Special_Characters #the elements that each Array2D of the multidimensiona Array2D will have.
     
-def Array2D(Unum_List):
+    
+def Initializing_Arrays(Unum_List): # Function to initialize Array2D and URL_Subdirectory_Test(Array1D)
     #this can be a single user input, maybe in a textbox to define lenght of test.
     Arrays_Of_Array2D = 47
 
@@ -49,36 +54,104 @@ def Array2D(Unum_List):
     print("Count of arrays inside Array2D:", len(Array2D))
     print("___________________________________________________________________________________________________")
     
-    return Arrays_Of_Array2D, Array2D
+    # Creates a 1 dimension array and makes it as long as the amount of arrays in Array2D, and makes every element to be empty "".
+    URL_Subdirectory_Test = [""] * Arrays_Of_Array2D   
+    
+    return Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test
 
-def Increase_To_Next_Option(i, j, Arrays_Of_Array2D, URL_Subdirectory_Test, Array2D, Unum_List):
+
+def Start_URL_Tests(Unum_List, Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test): # Evaluates every combination of selected characters.
+    
+    # For testing purposes.
+    Iteration_Count = 0 
+
+    # To id when the program should go back to array 1(index 0).
+    IsZero = True 
+    i = 0 
+
+    # While instead of a for. The for didn't allowed to modify i when it was inside another loop and if.
+    while i <= Arrays_Of_Array2D: 
+        i += 1
+        
+        if IsZero == True:
+            i = 0
+        IsZero = False
+        
+        print("___________________________________________________________________________________________________")
+        print("From i = 0 to i =", Arrays_Of_Array2D - 1, " |  i =", i)
+        print("___________________________________________________________________________________________________")
+        
+        for j in range(len(Unum_List)):
+            Iteration_Count += 1
+            
+            # Clears the contents of the string URL_Subdirectory before using it.
+            URL_Subdirectory = ""
+            # Every time URL_Subdirectory_Test is modified, its more efficient and simpler to use a string than an array.
+            
+            print("")
+            print("Iteration #", Iteration_Count)
+            print("From j = 0 to j =", len(Unum_List) - 1, "| i =", i, "& j =", j)
+            print("________")
+            print("")
+            
+            # Most important line in this program. 
+            URL_Subdirectory_Test[i] = Array2D[i][j]  
+            # As Array2D changes positioning thru its elements, they are stored on the 1d array. 
+            # URL_Subdirectory_Test is like an overlay of Array2D that will save the elements Array2D is going thru.
+            
+            # Stores all the elements of the list URL_Subdirectory_Test on the string variable URL_Subdirectory
+            print("URL_Subdirectory_Test = ", end="")
+            for k in range(len(URL_Subdirectory_Test)): 
+                print(URL_Subdirectory_Test[k], end="")
+                URL_Subdirectory = URL_Subdirectory + str(URL_Subdirectory_Test[k])
+            print()
+            
+            # Creates the complete url to test
+            url = "https://www.youtube.com/" + URL_Subdirectory #+ "=" 
+            print("URL =", url)
+
+            # If website exist, saves the URL on txt.
+            Check_URL(url) 
+            
+            print("___________________________________________________________________________________________________")
+                    
+            if j == len(Unum_List)-1: #si llega al final, va al proximo array, si es 9 va al proximo array etc etc y si no es 9, aumenta 1 e i-- j =0 so on hasta que i =0
+                IsZero, i = Increase_To_Next_Option(i, j, Arrays_Of_Array2D, URL_Subdirectory_Test, Array2D, Unum_List)
+
+
+def Increase_To_Next_Option(i, j, Arrays_Of_Array2D, URL_Subdirectory_Test, Array2D, Unum_List): # Increases to the next combination after reaching last character of array.
     print("j indeed is equal to 61")
-    i += 1  #needs rest of code to go back clean etc, what is          
+    
+    i += 1          
     while URL_Subdirectory_Test[i] == 9 and i < Arrays_Of_Array2D: #[i] is actually just the position of URL_Subdirectory_Test[i] and see if contents of that index == 9
         i += 1 #im using i somewhere that is causing the loop to end at 47, at i end.
-        
+    if URL_Subdirectory_Test[i] == "":
+        URL_Subdirectory_Test[i] = Array2D[i][0]
+        #this can be put outside of the for to optimize efficiency but needs initialize previous arrays to 0 function instead
+        # of the break.
+        #call function (inizialize previous arrays to 0)
+        IsZero, i = Reinitialize_Arrays_To_Zero(URL_Subdirectory_Test, Array2D, i, j)
+        #changed to b, didnt ran thru a first. move this to if inside for.    
     #look up Array2D[i][j] #if not 9, use a 
-    for l in range(len(Unum_List)): #compares#to compare contents of Array2D[i][j] with URL_Subdirectory_Test[i] and if same, then increases Array2D[i][l+1] and stores it in URL_Subdirectory_Test[i])
-        if URL_Subdirectory_Test[i] == "":
-            URL_Subdirectory_Test[i] = Array2D[i][0]
-            #this can be put outside of the for to optimize efficiency but needs initialize previous arrays to 0 function instead
-            # of the break.
-            #call function (inizialize previous arrays to 0)
-            break #changed to b, didnt ran thru a first. move this to if inside for.
-        elif URL_Subdirectory_Test[i] == Array2D[i][l]: #compare contents of Array2D[i][j] with URL_Subdirectory_Test[i] and if same, then 
-            URL_Subdirectory_Test[i] = Array2D[i][l+1]#issue here is that WURLTSTS is initialized with "" so it doesnt have anything to compare with.
-            #inside of for, but can be an if, instead of elif. needs == "" if to be changed as recommended.
-            
-            print("Character to add: ", end="")
-            print(URL_Subdirectory_Test[i])
-            
-            print("Entire string: ", end="")    
-            for k in range(len(URL_Subdirectory_Test)):
-                print(URL_Subdirectory_Test[k], end="")
-            break
+    else:
+        for l in range(len(Unum_List)): #compares#to compare contents of Array2D[i][j] with URL_Subdirectory_Test[i] and if same, then increases Array2D[i][l+1] and stores it in URL_Subdirectory_Test[i])
+            if URL_Subdirectory_Test[i] == Array2D[i][l]: #compare contents of Array2D[i][j] with URL_Subdirectory_Test[i] and if same, then 
+                URL_Subdirectory_Test[i] = Array2D[i][l+1]#issue here is that WURLTSTS is initialized with "" so it doesnt have anything to compare with.
+                #inside of for, but can be an if, instead of elif. needs == "" if to be changed as recommended.
+                
+                print("Character to add: ", end="")
+                print(URL_Subdirectory_Test[i])
+                
+                print("Entire string: ", end="")    
+                for k in range(len(URL_Subdirectory_Test)):
+                    print(URL_Subdirectory_Test[k], end="")
+                break
+        IsZero, i = Reinitialize_Arrays_To_Zero(URL_Subdirectory_Test, Array2D, i, j)
+            #make this a function (inizialize previous arrays to 0)
+            #call function (inizialize previous array to 0)
+
+def Reinitialize_Arrays_To_Zero(URL_Subdirectory_Test, Array2D, i, j):
     while i != 0: #inizialize previous arrays to 0
-        #make this a function (inizialize previous arrays to 0)
-        #call function (inizialize previous array to 0)
         i -= 1
         URL_Subdirectory_Test[i] = Array2D[i][0] # decrease other 9's to index 0("a")
         print(f"Value of i: {URL_Subdirectory_Test[i]}")
@@ -89,3 +162,11 @@ def Increase_To_Next_Option(i, j, Arrays_Of_Array2D, URL_Subdirectory_Test, Arra
         print(f"j equals : {j}")
     else:
         return True, i 
+    
+def End_URL_Tests(Array2D, Start_Program_Time): # Shows an end message with the time the program took to run.
+    print()
+    print("Count of items inside Array2D[0]:", len(Array2D[0]))
+    print("Count of arrays inside Array2D:", len(Array2D))
+    print()
+    End_Program_Time = time.time()
+    print("Time to compile:", round(End_Program_Time - Start_Program_Time, 4), "seconds.")
