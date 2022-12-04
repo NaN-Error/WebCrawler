@@ -1,6 +1,9 @@
-import urllib.request
+#module dedicated to Web functions management. This module can have more functions to expand program capabilities.
 
-def Check_URL(url, Databases_Path):
+import urllib.request
+from Modules.OS_Files_Manager import Store_Results
+
+def Check_URL(url):
     try:
         r = urllib.request.urlopen(url)
         getcode_url = urllib.request.urlopen(url).getcode()
@@ -12,30 +15,20 @@ def Check_URL(url, Databases_Path):
 
             if Site_Length > 1: #Filters placeholder sites with no info. #36539 Y, 31872 & 32064 N
                 print("Contains relevant information.")
-                with open(Databases_Path / 'Online.txt', 'a') as f:
-                    f.write("Webpage: ")
-                    f.write(url)
-                    f.write('\n')
-                    f.close()
+                Results = "Online"
+                Store_Results(Results, url, 0, 0)
+
         else:
             print("Unhandled code, see UnhandledCodes.txt for more information.")
-            with open(Databases_Path / 'UnhandledCodes.txt', 'a') as f:
-                f.write("Unhandled Code: ")
-                f.write(getcode_url)
-                f.write("- Webpage:")
-                f.write(url)
-                f.write('\n')
-                f.close()
+            Results = "UnhandledCodes"
+            Store_Results(Results, url, getcode_url, 0)
+
     except urllib.error.URLError as e:  #checks for no error in url access.
         print(e)
     except urllib.error.HTTPError as e:  #checks for error 404, webpage not found.
         print(e)
     else:
         print("Unhandled error, see UnhandledErrors.txt for more information.")
-        with open(Databases_Path / 'UnhandledErrors.txt', 'a') as f:
-            f.write("Unhandled Error: ")
-            f.write(str(urllib.error))
-            f.write("- Webpage:")
-            f.write(url)
-            f.write('\n')
-            f.close()
+        #a function with use cases, and sents the case thru parameter to the function use case?
+        Results = "UnhandledErrors"
+        Store_Results(Results, url, 0, urllib.error)

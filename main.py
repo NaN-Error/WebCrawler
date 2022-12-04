@@ -1,16 +1,12 @@
 # Purpose of this program: Check which webpages exist, using brute force.
 
-
-from pathlib import Path #For Windows/Mac path compatibility
-import os #To check, create, and remove files from OS directories.
 import string #To get the characters and numbers to create the URLs.
 import time #To get the execution time of the program.
 from Modules.WebTest import Check_URL #Local module. To check each URL created, store the ones online, and store Web error messages, if any.
-from Modules.OS_Files_Manager import deletefiles
+from Modules.OS_Files_Manager import Clear_Files # Local module. Deletes files created in previous runs.
 
-
+#c:\Users\wilba\My Drive\Documents\Personal Projects\Programacion\Projects\Git\Python\WebCrawler\
 start = time.time()
-Databases_Path = Path("Databases/")
 
 print("___________________________________________START___________________________________________________")
 print()
@@ -38,15 +34,11 @@ Big_List = Alphabet_Lowercase + Alphabet_Uppercase + Numbers_List #+ Special_Cha
 #this can be a single user input, maybe in a textbox to define lenght of test.
 Combined_List_Length = 47
 
-#this can be a module dedicated to local file management. This module can have more functions to expand program capabilities. 
+#this can be a  
 # e.x. database. gui for link selection (calls db to get all links in a gui list.) this list could also give some extra information
 # about the link.
-if os.path.isfile(Databases_Path / 'Online.txt'):
-    os.remove(Databases_Path / 'Online.txt')
-if os.path.isfile(Databases_Path / 'UnhandledCodes.txt'):
-    os.remove(Databases_Path / 'UnhandledCodes.txt')
-if os.path.isfile(Databases_Path / 'UnhandledErrors.txt'):
-    os.remove(Databases_Path / 'UnhandledErrors.txt')
+
+Clear_Files()
 
 # The rest can be on main. One web module can be made for the url tests. Find recommendation in the next comments.
 # to initialize array.
@@ -119,7 +111,7 @@ while i <= Combined_List_Length:
 
         # web test module function. This module can have more functions to expand program capabilities.
         
-        Check_URL(url, Databases_Path) # Doesn't need to return anything.
+        Check_URL(url) # Doesn't need to return anything.
         
         Website_URL = ""
         print("___________________________________________________________________________________________________")
