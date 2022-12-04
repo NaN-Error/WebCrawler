@@ -52,4 +52,3 @@ Unhandled Error: <module 'urllib.error' from 'c:\\Users\\wilba\\AppData\\Local\\
 Unhandled Error: <module 'urllib.error' from 'c:\\Users\\wilba\\AppData\\Local\\Programs\\Python\\Python39\\lib\\urllib\\error.py'>- Webpage:https://www.youtube.com/ca
 Unhandled Error: <module 'urllib.error' from 'c:\\Users\\wilba\\AppData\\Local\\Programs\\Python\\Python39\\lib\\urllib\\error.py'>- Webpage:https://www.youtube.com/ea
 Unhandled Error: <module 'urllib.error' from 'c:\\Users\\wilba\\AppData\\Local\\Programs\\Python\\Python39\\lib\\urllib\\error.py'>- Webpage:https://www.youtube.com/ha
-Unhandled Error: <module 'urllib.error' from 'c:\\Users\\wilba\\AppData\\Local\\Programs\\Python\\Python39\\lib\\urllib\\error.py'>- Webpage:https://www.youtube.com/oa

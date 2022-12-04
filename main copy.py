@@ -78,9 +78,44 @@ while i <= Arrays_Of_Array2D:
         
         print("___________________________________________________________________________________________________")
                 
-        if j == len(Unum_List)-1: #si llega al final, va al proximo array, si es 9 va al proximo array etc etc y si no es 9, aumenta 1 e i-- j =0 so on hasta que i =0
-            IsZero, i = Modules.Main_Functions.Increase_To_Next_Option(i, j, Arrays_Of_Array2D, URL_Subdirectory_Test, Array2D, Unum_List)
-        
+        if j == 61: #si llega al final, va al proximo array, si es 9 va al proximo array etc etc y si no es 9, aumenta 1 e i-- j =0 so on hasta que i =0
+            print("j indeed is equal to 61")
+            i += 1  #needs rest of code to go back clean etc, what is          
+            while URL_Subdirectory_Test[i] == 9 and i < Arrays_Of_Array2D: #[i] is actually just the position of URL_Subdirectory_Test[i] and see if contents of that index == 9
+                i += 1 #im using i somewhere that is causing the loop to end at 47, at i end.
+                
+            #look up Array2D [i][j] #if not 9, use a 
+            for l in range(len(Unum_List)): #compares#to compare contents of Array2D[i][j] with URL_Subdirectory_Test[i] and if same, then increases Array2D[i][l+1] and stores it in URL_Subdirectory_Test[i])
+                if URL_Subdirectory_Test[i] == "":
+                    URL_Subdirectory_Test[i] = Array2D[i][0]
+                    #this can be put outside of the for to optimize efficiency but needs initialize previous arrays to 0 function instead
+                    # of the break.
+                    #call function (inizialize previous arrays to 0)
+                    break #changed to b, didnt ran thru a first. move this to if inside for.
+                elif URL_Subdirectory_Test[i] == Array2D[i][l]: #compare contents of Array2D[i][j] with URL_Subdirectory_Test[i] and if same, then 
+                    URL_Subdirectory_Test[i] = Array2D[i][l+1]#issue here is that WURLTSTS is initialized with "" so it doesnt have anything to compare with.
+                    #inside of for, but can be an if, instead of elif. needs == "" if to be changed as recommended.
+                    
+                    print("Character to add: ", end="")
+                    print(URL_Subdirectory_Test[i])
+                    
+                    print("Entire string: ", end="")    
+                    for k in range(len(URL_Subdirectory_Test)):
+                        print(URL_Subdirectory_Test[k], end="")
+                    break
+            while i != 0: #inizialize previous arrays to 0
+                #make this a function (inizialize previous arrays to 0)
+                #call function (inizialize previous array to 0)
+                i -= 1
+                URL_Subdirectory_Test[i] = Array2D[i][0] # decrease other 9's to index 0
+                print(f"\nValue of i: {URL_Subdirectory_Test[i]}")
+                print("New string: ", end="")
+                for k in range(len(URL_Subdirectory_Test)):
+                    print(URL_Subdirectory_Test[k], end="")
+                print(f"\ni equals : {i}")
+                print(f"\nj equals : {j}")
+            else:
+                IsZero = True 
 print()
 print("Count of items inside Array2D[0]:", len(Array2D[0]))
 print("Count of arrays inside Array2D:", len(Array2D))
