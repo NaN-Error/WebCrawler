@@ -6,6 +6,7 @@ import os #To check, create, and remove files from OS directories.
 import string #To get the characters and numbers to create the URLs.
 import time #To get the execution time of the program.
 from Modules.WebTest import Check_URL #Local module. To check each URL created, store the ones online, and store Web error messages, if any.
+from Modules.OS_Files_Manager import deletefiles
 
 
 start = time.time()

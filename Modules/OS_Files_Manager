@@ -1,0 +1,2 @@
+def deletefiles():
+    print("ok")

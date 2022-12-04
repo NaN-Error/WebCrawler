@@ -10,7 +10,7 @@ def Check_URL(url, Databases_Path):
             print("Site length =", Site_Length)
             print("Site length type =", type(Site_Length))
 
-            if Site_Length > 1: #Filters placeholder sites with no info.
+            if Site_Length > 1: #Filters placeholder sites with no info. #36539 Y, 31872 & 32064 N
                 print("Contains relevant information.")
                 with open(Databases_Path / 'Online.txt', 'a') as f:
                     f.write("Webpage: ")
@@ -39,8 +39,3 @@ def Check_URL(url, Databases_Path):
             f.write(url)
             f.write('\n')
             f.close()
-        
-
-#TO DO: do if
-#36539 is my case, when site contains info
-#32064 is when site doesnt contain info 31872
