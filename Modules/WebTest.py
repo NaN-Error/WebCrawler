@@ -20,7 +20,7 @@ def Check_URL(url):
             print("Unhandled code, see UnhandledCodes.txt for more information.")
             Results = "UnhandledCodes"
             Store_Results(Results, url, getcode_url, 0)
-    except urllib.error.URLError as e:  #checks for no error in url access.
+    except urllib.error.URLError as e:  #checks for errors in url access.
         print(e)
     except urllib.error.HTTPError as e:  #checks for error 404, webpage not found.
         print(e)
