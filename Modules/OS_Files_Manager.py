@@ -1,8 +1,6 @@
 # module dedicated to local file management. This module can have more functions to expand program capabilities.
 from pathlib import Path #For Windows/Mac path compatibility
 import os #To check, create, and remove files from OS directories.
-import sys
-print(sys.path)
 
 Databases_Path = Path("Databases/")
 

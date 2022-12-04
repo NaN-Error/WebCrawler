@@ -12,23 +12,19 @@ def Check_URL(url):
             Site_Length = len(r.read())
             print("Site length =", Site_Length)
             print("Site length type =", type(Site_Length))
-
             if Site_Length > 1: #Filters placeholder sites with no info. #36539 Y, 31872 & 32064 N
                 print("Contains relevant information.")
                 Results = "Online"
                 Store_Results(Results, url, 0, 0)
-
         else:
             print("Unhandled code, see UnhandledCodes.txt for more information.")
             Results = "UnhandledCodes"
             Store_Results(Results, url, getcode_url, 0)
-
     except urllib.error.URLError as e:  #checks for no error in url access.
         print(e)
     except urllib.error.HTTPError as e:  #checks for error 404, webpage not found.
         print(e)
     else:
         print("Unhandled error, see UnhandledErrors.txt for more information.")
-        #a function with use cases, and sents the case thru parameter to the function use case?
         Results = "UnhandledErrors"
         Store_Results(Results, url, 0, urllib.error)
