@@ -12,17 +12,3 @@ Webpage: https://www.youtube.com/l
 Webpage: https://www.youtube.com/m
 Webpage: https://www.youtube.com/n
 Webpage: https://www.youtube.com/o
-Webpage: https://www.youtube.com/p
-Webpage: https://www.youtube.com/r
-Webpage: https://www.youtube.com/t
-Webpage: https://www.youtube.com/v
-Webpage: https://www.youtube.com/w
-Webpage: https://www.youtube.com/x
-Webpage: https://www.youtube.com/z
-Webpage: https://www.youtube.com/A
-Webpage: https://www.youtube.com/B
-Webpage: https://www.youtube.com/C
-Webpage: https://www.youtube.com/D
-Webpage: https://www.youtube.com/E
-Webpage: https://www.youtube.com/F
-Webpage: https://www.youtube.com/G

@@ -1,34 +1,5 @@
 # Purpose of this program:
-    # Check which webpages exist, using brute force.
-
-# __________________________________________COMMENTS_________________________________________________
-
-# brainstorm possible ways of reaching the end goal
-# choose the most efficient, memory wise
-# visualize the data flow, then describe it, then program it.
-
-# To do:
-
-# Comment code
-# Clean code
-# Create functions
-# Modulate
-# Expand program capabilities
-    #gui
-    # second function could be website download as pdf. 
-    # webcrawl to id every webpage a website has, going thru all its links related to the website.
-        #can individually download each link as pdf or can also download every link.
-    # could web crawl to id databases on website (webpage by webpage.) gets webpages, and databases it contains.
-        #can download all databases/database contents.
-        # could be all databases from a given webpage, or crawl all website and get all databases from all webpages.
-    # main should give up a gui to ask user what function the program is going to execute. 
-        # brute force find webpages of a website, find all webpages of a website. find databases of webpage/website.
-# Optimize efficiency
-    # Reevaluate processes used.
-    # multithread (main function)
-    
-# ___________________________________________________________________________________________________
-
+# Check which webpages exist, using brute force.
 import urllib.request
 import os
 import string
@@ -232,3 +203,32 @@ print()
 end = time.time()
 print("Time to compile:", round(end - start, 4), "seconds.")
 
+
+
+# __________________________________________COMMENTS_________________________________________________
+
+# brainstorm possible ways of reaching the end goal
+# choose the most efficient, memory wise
+# visualize the data flow, then describe it, then program it.
+
+# To do:
+
+# Comment code
+# Clean code
+# Create functions
+# Modulate
+# Expand program capabilities
+    #gui
+    # second function could be website download as pdf. 
+    # webcrawl to id every webpage a website has, going thru all its links related to the website.
+        #can individually download each link as pdf or can also download every link.
+    # could web crawl to id databases on website (webpage by webpage.) gets webpages, and databases it contains.
+        #can download all databases/database contents.
+        # could be all databases from a given webpage, or crawl all website and get all databases from all webpages.
+    # main should give up a gui to ask user what function the program is going to execute. 
+        # brute force find webpages of a website, find all webpages of a website. find databases of webpage/website.
+# Optimize efficiency
+    # Reevaluate processes used.
+    # multithread (main function)
+    
+# ___________________________________________________________________________________________________
