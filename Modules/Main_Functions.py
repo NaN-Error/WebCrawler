@@ -124,11 +124,11 @@ def Start_URL_Tests(Unum_List, Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test
 
 def Increase_To_Next_Option(i, j, Arrays_Of_Array2D, URL_Subdirectory_Test, Array2D, Unum_List): # Increases to the next combination after reaching last character of array.
     print(f"j indeed is equal to {j}")
-    
     i += 1          
-    while URL_Subdirectory_Test[i] == 9 and i < Arrays_Of_Array2D: #cant be 9, has to be end of biglist. #[i] is actually just the position of URL_Subdirectory_Test[i] and see if contents of that index == 9
+    
+    while URL_Subdirectory_Test[i] == Unum_List[len(Unum_List) - 1] and i < Arrays_Of_Array2D: #cant be 9, has to be end of biglist. #[i] is actually just the position of URL_Subdirectory_Test[i] and see if contents of that index == 9
         i += 1 #im using i somewhere that is causing the loop to end at 47, at i end.
-        print(i)
+        #add a hasbeenincreased var to do an if yes then ReinitializeArrto0 to avoid execution of function every time.
     if URL_Subdirectory_Test[i] == "":
         URL_Subdirectory_Test[i] = Array2D[i][0]
         print(URL_Subdirectory_Test[i])
