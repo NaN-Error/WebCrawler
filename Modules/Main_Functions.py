@@ -3,7 +3,6 @@ from Modules.WebTest import Check_URL # Local module. To check each URL created,
 import time # To get the execution time of the program.
 
 # Clean comments, clean Increase_To_Next_Option =="" option to reuse function.
-# for len(x-1)
 
 def E_Ploribus_Unum(): # Function to initialize characters to test
     # Can be checkbox input for user to select which ones to include in tests.
@@ -84,7 +83,7 @@ def Start_URL_Tests(Unum_List, Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test
         print("From i = 0 to i =", Arrays_Of_Array2D - 1, " |  i =", i)
         print("___________________________________________________________________________________________________")
         
-        for j in range(len(Unum_List)):
+        for j in range(len(Unum_List)-1):
             Iteration_Count += 1
             
             # Clears the contents of the string URL_Subdirectory before using it.
@@ -104,7 +103,7 @@ def Start_URL_Tests(Unum_List, Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test
             
             # Stores all the elements of the list URL_Subdirectory_Test on the string variable URL_Subdirectory
             print("URL_Subdirectory_Test = ", end="")
-            for k in range(len(URL_Subdirectory_Test)): 
+            for k in range(len(URL_Subdirectory_Test)-1): 
                 print(URL_Subdirectory_Test[k], end="")
                 URL_Subdirectory = URL_Subdirectory + str(URL_Subdirectory_Test[k])
             print()
@@ -139,7 +138,7 @@ def Increase_To_Next_Option(i, j, Arrays_Of_Array2D, URL_Subdirectory_Test, Arra
         #changed to b, didnt ran thru a first. move this to if inside for.    
     #look up Array2D[i][j] #if not 9, use a 
     else:
-        for l in range(len(Unum_List)): #compares#to compare contents of Array2D[i][j] with URL_Subdirectory_Test[i] and if same, then increases Array2D[i][l+1] and stores it in URL_Subdirectory_Test[i])
+        for l in range(len(Unum_List)-1): #compares#to compare contents of Array2D[i][j] with URL_Subdirectory_Test[i] and if same, then increases Array2D[i][l+1] and stores it in URL_Subdirectory_Test[i])
             if URL_Subdirectory_Test[i] == Array2D[i][l]: #compare contents of Array2D[i][j] with URL_Subdirectory_Test[i] and if same, then 
                 URL_Subdirectory_Test[i] = Array2D[i][l+1]#issue here is that WURLTSTS is initialized with "" so it doesnt have anything to compare with.
                 #inside of for, but can be an if, instead of elif. needs == "" if to be changed as recommended.
@@ -148,7 +147,7 @@ def Increase_To_Next_Option(i, j, Arrays_Of_Array2D, URL_Subdirectory_Test, Arra
                 print(URL_Subdirectory_Test[i])
                 
                 print("Entire string: ", end="")    
-                for k in range(len(URL_Subdirectory_Test)):
+                for k in range(len(URL_Subdirectory_Test)-1):
                     print(URL_Subdirectory_Test[k], end="")
                 break
         Reinitialize_Arrays_To_Zero(URL_Subdirectory_Test, Array2D, i, j)
@@ -161,7 +160,7 @@ def Reinitialize_Arrays_To_Zero(URL_Subdirectory_Test, Array2D, i, j): # Inizial
         URL_Subdirectory_Test[i] = Array2D[i][0] # Decrease other 9's to index 0("a")
         print(f"\nValue of i: {URL_Subdirectory_Test[i]}")
         print("New string: ", end="")
-        for k in range(len(URL_Subdirectory_Test)):
+        for k in range(len(URL_Subdirectory_Test)-1):
             print(URL_Subdirectory_Test[k], end="")
         print(f"\ni equals : {i}")
         print(f"j equals : {j}")

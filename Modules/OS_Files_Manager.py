@@ -14,7 +14,7 @@ def Clear_Files(): # Removes the txt files that contains all the URL's info.
         os.remove(Databases_Path / 'UnhandledErrors.txt')
 
     
-def Store_Results(Results, url, getcode_url, Unhandled_Error):
+def Store_Results(Results, url, getcode_url, Unhandled_Error): # Stores the URL check results.
     if Results == "Online":
         with open(Databases_Path / 'Online.txt', 'a') as f:
             f.write("Webpage: ")
