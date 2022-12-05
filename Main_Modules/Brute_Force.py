@@ -3,7 +3,7 @@ import time # To get the execution time of the program.
 from Main_Modules.Reusable_Modules.WebTest import Check_URL # Local module. To check each URL created, store the ones online, and store Web error messages, if any.
 from Main_Modules.Reusable_Modules.OS_Files_Manager import Clear_Files # Local module. Deletes files created in previous runs.
 
-# Check which functions can be reused, and move them to Reusable_Modules.Functions or similar, rethink when needed.
+# Check which functions can be reused, and move them to Reusable_Modules.Functions or similar, rethink when building new program functionality.
 
 def Check_Sites(Start_Program_Time):# Purpose of this program: Check which webpages exist, using brute force. All of this below makes up one functionality of the program.
     
