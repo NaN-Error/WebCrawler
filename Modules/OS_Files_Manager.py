@@ -4,7 +4,6 @@ import os # To check, create, and remove files from OS directories.
 
 Databases_Path = Path("Databases/")
 
-#Comment code
 
 def Clear_Files(): # Removes the txt files that contains all the URL's info. 
     if os.path.isfile(Databases_Path / 'Online.txt'):
@@ -13,8 +12,9 @@ def Clear_Files(): # Removes the txt files that contains all the URL's info.
         os.remove(Databases_Path / 'UnhandledCodes.txt')
     if os.path.isfile(Databases_Path / 'UnhandledErrors.txt'):
         os.remove(Databases_Path / 'UnhandledErrors.txt')
+
     
-def Store_Results(Results, url, getcode_url, urlliberror):
+def Store_Results(Results, url, getcode_url, Unhandled_Error):
     if Results == "Online":
         with open(Databases_Path / 'Online.txt', 'a') as f:
             f.write("Webpage: ")
@@ -32,7 +32,7 @@ def Store_Results(Results, url, getcode_url, urlliberror):
     elif Results == "UnhandledErrors":
         with open(Databases_Path / 'UnhandledErrors.txt', 'a') as f:
             f.write("Unhandled Error: ")
-            f.write(str(urlliberror))
+            f.write(str(Unhandled_Error))
             f.write("- Webpage:")
             f.write(url)
             f.write('\n')
