@@ -1,10 +1,11 @@
 import string # To get the characters and numbers to create the URLs.
 import time # To get the execution time of the program.
-from Modules.WebTest import Check_URL # Local module. To check each URL created, store the ones online, and store Web error messages, if any.
-from Modules.OS_Files_Manager import Clear_Files # Local module. Deletes files created in previous runs.
+from Main_Modules.Reusable_Modules.WebTest import Check_URL # Local module. To check each URL created, store the ones online, and store Web error messages, if any.
+from Main_Modules.Reusable_Modules.OS_Files_Manager import Clear_Files # Local module. Deletes files created in previous runs.
 
+# Check which functions can be reused, and move them to Reusable_Modules.Functions or similar, rethink when needed.
 
-def Brute_Force_Check_Sites(Start_Program_Time):# Purpose of this program: Check which webpages exist, using brute force. All of this below makes up one functionality of the program.
+def Check_Sites(Start_Program_Time):# Purpose of this program: Check which webpages exist, using brute force. All of this below makes up one functionality of the program.
     
     # Removes the txt files that contains all the URL's info. 
     Clear_Files() 
@@ -136,6 +137,7 @@ def Start_URL_Tests(Unum_List, Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test
             print()
             
             # Creates the complete url to test
+            #url can be input variable, and 2nd subdirectory can be added as input variable too
             url = "https://www.youtube.com/" + URL_Subdirectory #+ "=" 
             print("URL =", url)
 

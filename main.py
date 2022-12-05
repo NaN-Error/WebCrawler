@@ -1,11 +1,11 @@
 import time # To get the execution time of the program.
 Start_Program_Time = time.time()
-import Modules.Main_Functions # Local module. Contains unclassified functions used by main.
+import Main_Modules.Brute_Force # Local module. Contains unclassified functions used by main.
 
 
 choice = 1 # Will be an input. Will make a gui with options where 1 is Brute Force check for webpages in a website.
 if choice == 1:
-    Modules.Main_Functions.Brute_Force_Check_Sites(Start_Program_Time)
+    Main_Modules.Brute_Force.Check_Sites(Start_Program_Time)
 
 
 #_________________________________________________COMMENTS_________________________________________________
@@ -21,7 +21,7 @@ if choice == 1:
 # [X]Create functions
 # []Make functions reusable for other purposes. 
     # []Can create a module for reusable functions, and one module for each program functionality e.x.
-        # []Brute_Force_Check_Sites.py module with all its non reusable functions calling all rehusable functions.
+        # []Check_Sites.py module with all its non reusable functions calling all rehusable functions.
         # []Main_Funtions module can be all reusable functions. rename. Change all ocurrences(Main_Functions to Reusable_Functions).
 # [X]Modulate
 # []Expand program capabilities
@@ -41,5 +41,6 @@ if choice == 1:
     # []Reevaluate processes used.
     # []Multithread (main function)
     
+# If someone has enough time and will, they can do anything.
 # ___________________________________________________________________________________________________
 

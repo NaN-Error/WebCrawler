@@ -1,6 +1,6 @@
 # Module dedicated to Web functions management. This module can have more functions to expand program capabilities.
 import urllib.request
-from Modules.OS_Files_Manager import Store_Results
+from Main_Modules.Reusable_Modules.OS_Files_Manager import Store_Results
 
 
 def Check_URL(url):
