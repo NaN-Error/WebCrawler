@@ -19,11 +19,15 @@ if choice == 1:
 # [X]Comment code
 # [X]Clean code
 # [X]Create functions
+# [X]Modulate
 # []Make functions reusable for other purposes. 
-    # []Can create a module for reusable functions, and one module for each program functionality e.x.
+    # [] Can create a module for reusable functions, 
+    # [] one module for each program functionality e.x.
         # []Check_Sites.py module with all its non reusable functions calling all rehusable functions.
         # []Main_Funtions module can be all reusable functions. rename. Change all ocurrences(Main_Functions to Reusable_Functions).
-# [X]Modulate
+# []Optimize efficiency
+    # []Reevaluate processes used.
+    # []Multithread (main function)
 # []Expand program capabilities
     # []GUI
     # []Database. gui for link selection (calls db to get all links in a gui list.) this list could also give some extra information
@@ -37,9 +41,6 @@ if choice == 1:
     # []Main should give up a gui to ask user what function the program is going to execute. 
         # []Brute force find webpages of a website, find all webpages of a website. find databases of webpage/website.
     # []Maybe organize by a module that calls the functions it needs, a module for each big function
-# []Optimize efficiency
-    # []Reevaluate processes used.
-    # []Multithread (main function)
     
 # If someone has enough time and will, they can do anything.
 # ___________________________________________________________________________________________________ 
