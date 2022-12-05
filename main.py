@@ -1,39 +1,11 @@
 import time # To get the execution time of the program.
 Start_Program_Time = time.time()
 import Modules.Main_Functions # Local module. Contains unclassified functions used by main.
-from Modules.OS_Files_Manager import Clear_Files # Local module. Deletes files created in previous runs.
-
-
-def Brute_Force_Check_Sites():# Purpose of this program: Check which webpages exist, using brute force. All of this below makes up one functionality of the program.
-    
-    # Removes the txt files that contains all the URL's info. 
-    Clear_Files() 
-    # After every run, the txt files needs to be kept for evaluation, so they need to be removed at the beginning of the rerun of the program.
-
-    print("_____________________________________Initializing_Arrays___________________________________________\n")
-
-    # Assign all the elements of all the lists selected in E_Ploribus_Unum() into Unum_List.
-    Unum_List = Modules.Main_Functions.E_Ploribus_Unum()
-
-    # Initialize Array2D with the amount of arrays specified(Arrays_Of_Array2D), and the elements of every array.
-    Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test = Modules.Main_Functions.Initializing_Arrays(Unum_List)
-
-    print("___________________________________________START___________________________________________________")
-
-    # Evaluates every combination of selected characters.
-    Modules.Main_Functions.Start_URL_Tests(Unum_List, Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test)
-
-    print("____________________________________________END____________________________________________________")
-
-    # Shows an end message with the time the program took to run.
-    Modules.Main_Functions.End_URL_Tests(Array2D, Start_Program_Time)  
-
-    print("____________________________________________END____________________________________________________")
 
 
 choice = 1 # Will be an input. Will make a gui with options where 1 is Brute Force check for webpages in a website.
 if choice == 1:
-    Brute_Force_Check_Sites()
+    Modules.Main_Functions.Brute_Force_Check_Sites(Start_Program_Time)
 
 
 #_________________________________________________COMMENTS_________________________________________________
@@ -47,6 +19,10 @@ if choice == 1:
 # [X]Comment code
 # [X]Clean code
 # [X]Create functions
+# []Make functions reusable for other purposes. 
+    # []Can create a module for reusable functions, and one module for each program functionality e.x.
+        # []Brute_Force_Check_Sites.py module with all its non reusable functions calling all rehusable functions.
+        # []Main_Funtions module can be all reusable functions. rename. Change all ocurrences(Main_Functions to Reusable_Functions).
 # [X]Modulate
 # []Expand program capabilities
     # []GUI
