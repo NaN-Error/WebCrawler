@@ -1,12 +1,15 @@
 import time # To get the execution time of the program.
 Start_Program_Time = time.time()
-import Main_Modules.Brute_Force # Local module. Contains unclassified functions used by main.
+import Modules.Find_Sites # Local module. Contains unclassified functions used by main.
 
 
 choice = 1 # Will be an input. Will make a gui with options where 1 is Brute Force check for webpages in a website.
 if choice == 1:
-    Main_Modules.Brute_Force.Check_Sites(Start_Program_Time)
+    Modules.Find_Sites.Brute_Force()
 
+
+End_Program_Time = time.time()
+print("Time to compile:", round(End_Program_Time - Start_Program_Time, 4), "seconds.")
 
 #_________________________________________________COMMENTS_________________________________________________
 

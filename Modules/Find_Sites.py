@@ -1,11 +1,18 @@
 import string # To get the characters and numbers to create the URLs.
 import time # To get the execution time of the program.
-from Main_Modules.Reusable_Modules.WebTest import Check_URL # Local module. To check each URL created, store the ones online, and store Web error messages, if any.
-from Main_Modules.Reusable_Modules.OS_Files_Manager import Clear_Files # Local module. Deletes files created in previous runs.
+from Modules.Reusable_Modules.WebTest import Check_URL # Local module. To check each URL created, store the ones online, and store Web error messages, if any.
+from Modules.Reusable_Modules.OS_Files_Manager import Clear_Files # Local module. Deletes files created in previous runs.
 
 # Check which functions can be reused, and move them to Reusable_Modules.Functions or similar, rethink when building new program functionality.
 
-def Check_Sites(Start_Program_Time):# Purpose of this program: Check which webpages exist, using brute force. All of this below makes up one functionality of the program.
+def Brute_Force():# Main function - Checks which webpages exist, using brute force.
+    
+    # gui  
+    # continue? if data stored, if yes, continue, if not, clear_files(), else #works with both url maker and url lookup.
+    # calls websiteurlinput() # asks website url. look at the end of code.
+    # checklist make urls, lookup urls. 
+    # checklist store urls that exist, store url that doesnt exist (db should specify on column "exist" as boolean true false.), store errors founds on urls.
+    
     
     # Removes the txt files that contains all the URL's info. 
     Clear_Files() 
@@ -26,40 +33,18 @@ def Check_Sites(Start_Program_Time):# Purpose of this program: Check which webpa
 
     print("____________________________________________END____________________________________________________")
 
-    # Shows an end message with the time the program took to run.
-    End_URL_Tests(Array2D, Start_Program_Time)  
+    print()
+    print("Count of items inside Array2D[0]:", len(Array2D[0]))
+    print("Count of arrays inside Array2D:", len(Array2D))
+    print("Completed.")
+    print()  
 
     print("____________________________________________END____________________________________________________")
 
 
-def E_Ploribus_Unum(): # Function to initialize characters to test
-    # Can be checkbox input for user to select which ones to include in tests.
-    
-    Alphabet_Lowercase = list(string.ascii_lowercase)
-    print(f"Lowercase List: {Alphabet_Lowercase}")
-    print()
-
-    Alphabet_Uppercase = list(string.ascii_uppercase)
-    print(f"Uppercase List: {Alphabet_Uppercase}")
-    print()
-
-    Numbers_List = list(string.digits)
-    print(f"Number's List: {Numbers_List}")
-    print()
-
-    Special_Characters = list(string.punctuation)
-    print(f"Special Characters List: {Special_Characters}")
-    print()
-
-    # Test url lookup with special_characters
-    #return Alphabet_Lowercase + Alphabet_Uppercase + Numbers_List + Special_Characters # The elements that each Array2D of the multidimensiona Array2D will have.
-
-    return Numbers_List  #+ Special_Characters # Temp return for testing purposes.
-
-
-def Initializing_Arrays(Unum_List): # Function to initialize Array2D and URL_Subdirectory_Test(Array1D)
+def Initializing_Arrays(Unum_List): # Brute_Force Sub function - Initializes Array2D and URL_Subdirectory_Test(Array1D)
     # This can be a single user input, maybe in a textbox to define lenght of test.
-    Arrays_Of_Array2D = 47
+    Arrays_Of_Array2D = 2
 
     # Initializes the dimensions of the multidimensional array using Arrays_Of_Array2D as the amount of arrays
     # And with Unum_List as the elements every array in the multidimensional array will contain.
@@ -91,7 +76,7 @@ def Initializing_Arrays(Unum_List): # Function to initialize Array2D and URL_Sub
     return Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test
 
 
-def Start_URL_Tests(Unum_List, Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test): # Evaluates every combination of selected characters.
+def Start_URL_Tests(Unum_List, Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test): # Brute_Force Sub function - Evaluates every combination of selected characters.
     
     # For testing purposes.
     Iteration_Count = 0 
@@ -151,7 +136,7 @@ def Start_URL_Tests(Unum_List, Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test
                 IsZero, i = Increase_To_Next_Option(i, j, Arrays_Of_Array2D, URL_Subdirectory_Test, Array2D, Unum_List)
 
 
-def Increase_To_Next_Option(i, j, Arrays_Of_Array2D, URL_Subdirectory_Test, Array2D, Unum_List): # Increases to the next combination after reaching last character of array.
+def Increase_To_Next_Option(i, j, Arrays_Of_Array2D, URL_Subdirectory_Test, Array2D, Unum_List): # Brute_Force Sub function - Increases to the next combination after reaching last character of array.
     print(f"j indeed is equal to {j}")
     i += 1          
     
@@ -183,10 +168,10 @@ def Increase_To_Next_Option(i, j, Arrays_Of_Array2D, URL_Subdirectory_Test, Arra
     return True, 0
 
 
-def Reinitialize_Arrays_To_Zero(URL_Subdirectory_Test, Array2D, i, j): # Inizialize previous arrays to 0
-    while i != 0: 
+def Reinitialize_Arrays_To_Zero(URL_Subdirectory_Test, Array2D, i, j): # Brute_Force Sub function - Reusable - Inizialize previous arrays to 0
+    while i != 0: # Goes from the index before the one modified, to the first index(index 0)
         i -= 1
-        URL_Subdirectory_Test[i] = Array2D[i][0] # Decrease other 9's to index 0("a")
+        URL_Subdirectory_Test[i] = Array2D[i][0] # Substitutes current index value with index 0 value("a if a is the first index of the list")
         print(f"\nValue of i: {URL_Subdirectory_Test[i]}")
         print("New string: ", end="")
         for k in range(len(URL_Subdirectory_Test)):
@@ -195,10 +180,29 @@ def Reinitialize_Arrays_To_Zero(URL_Subdirectory_Test, Array2D, i, j): # Inizial
         print(f"j equals : {j}")
 
 
-def End_URL_Tests(Array2D, Start_Program_Time): # Shows an end message with the time the program took to run.
+def E_Ploribus_Unum(): # Reusable - Returns a list with lower, upper, number and special characters, as selected.
+    # Can be checkbox input for user to select which ones to include in tests.
+    
+    Alphabet_Lowercase = list(string.ascii_lowercase)
+    print(f"Lowercase List: {Alphabet_Lowercase}")
     print()
-    print("Count of items inside Array2D[0]:", len(Array2D[0]))
-    print("Count of arrays inside Array2D:", len(Array2D))
+
+    Alphabet_Uppercase = list(string.ascii_uppercase)
+    print(f"Uppercase List: {Alphabet_Uppercase}")
     print()
-    End_Program_Time = time.time()
-    print("Time to compile:", round(End_Program_Time - Start_Program_Time, 4), "seconds.")
+
+    Numbers_List = list(string.digits)
+    print(f"Number's List: {Numbers_List}")
+    print()
+
+    Special_Characters = list(string.punctuation)
+    print(f"Special Characters List: {Special_Characters}")
+    print()
+
+    # Test url lookup with special_characters, see which ones are allowed in url.
+    #return Alphabet_Lowercase + Alphabet_Uppercase + Numbers_List + Special_Characters # The elements that each Array2D of the multidimensiona Array2D will have.
+
+    return Numbers_List  #+ Special_Characters # Temp return for testing purposes.
+
+
+#def websiteurlinput (): gui to request website url, checks if url has / at the end if not, adds it, returns url to functions that needs this input(bruteforce, linkfinder, brokenlinks) - Reusable
