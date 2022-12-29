@@ -44,7 +44,7 @@ def Brute_Force():# Main function - Checks which webpages exist, using brute for
 
 def Initializing_Arrays(Unum_List): # Brute_Force Sub function - Initializes Array2D and URL_Subdirectory_Test(Array1D)
     # This can be a single user input, maybe in a textbox to define lenght of test.
-    Arrays_Of_Array2D = 2
+    Arrays_Of_Array2D = 1
 
     # Initializes the dimensions of the multidimensional array using Arrays_Of_Array2D as the amount of arrays
     # And with Unum_List as the elements every array in the multidimensional array will contain.
@@ -85,8 +85,8 @@ def Start_URL_Tests(Unum_List, Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test
     IsZero = True 
     i = 0 
 
-    # While instead of a for. The for didn't allowed to modify i when it was inside another loop and if.
-    while i <= Arrays_Of_Array2D: 
+    # While instead of a for. The for didn't allowed to modify i when it was inside another loop and if. # Testing while as a for.
+    while i < Arrays_Of_Array2D: 
         i += 1
         
         if IsZero == True:
@@ -133,13 +133,18 @@ def Start_URL_Tests(Unum_List, Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test
             print("___________________________________________________________________________________________________")
                     
             if j == len(Unum_List)-1: #si llega al final, va al proximo array, si es 9 va al proximo array etc etc y si no es 9, aumenta 1 e i-- j =0 so on hasta que i =0
-                IsZero, i = Increase_To_Next_Option(i, j, Arrays_Of_Array2D, URL_Subdirectory_Test, Array2D, Unum_List)
+                if i == Arrays_Of_Array2D-1:
+                    print("end")
+                    break #has to end program if i has reached its end.
+                else:
+                    IsZero, i = Increase_To_Next_Option(i, j, Arrays_Of_Array2D, URL_Subdirectory_Test, Array2D, Unum_List)
 
 
 def Increase_To_Next_Option(i, j, Arrays_Of_Array2D, URL_Subdirectory_Test, Array2D, Unum_List): # Brute_Force Sub function - Increases to the next combination after reaching last character of array.
-    print(f"j indeed is equal to {j}")
+    print(f"j indeed is equal to {j}")  
+    print(i)
     i += 1          
-    
+    print(i)
     while URL_Subdirectory_Test[i] == Unum_List[len(Unum_List) - 1] and i < Arrays_Of_Array2D: #cant be 9, has to be end of biglist. #[i] is actually just the position of URL_Subdirectory_Test[i] and see if contents of that index == 9
         i += 1 #im using i somewhere that is causing the loop to end at 47, at i end.
         #add a hasbeenincreased var to do an if yes then ReinitializeArrto0 to avoid execution of function every time.
