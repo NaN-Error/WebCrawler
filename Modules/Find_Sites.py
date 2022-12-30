@@ -157,6 +157,7 @@ def Increase_To_Next_Option(i, j, Arrays_Of_Array2D, URL_Subdirectory_Test, Arra
         if i == Arrays_Of_Array2D:
             print("end")
             break #its going to the while's else? or looping in the for.
+            return True, 0
         #add a hasbeenincreased var to do an if yes then ReinitializeArrto0 to avoid execution of function every time.
         #if i == Arrays_Of_Array2D-1:
             #print("end")
@@ -186,7 +187,7 @@ def Increase_To_Next_Option(i, j, Arrays_Of_Array2D, URL_Subdirectory_Test, Arra
                     break
             Reinitialize_Arrays_To_Zero(URL_Subdirectory_Test, Array2D, i, j)
     
-    return True, 0
+    return True, i
 
 
 def Reinitialize_Arrays_To_Zero(URL_Subdirectory_Test, Array2D, i, j): # 1.5 - Reusable - Inizialize previous arrays to 0
