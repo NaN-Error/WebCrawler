@@ -44,7 +44,7 @@ def Brute_Force():# 1. - Checks which webpages exist, using brute force.
 
 def Initializing_Arrays(Unum_List): # 1.2 - Initializes Array2D and URL_Subdirectory_Test(Array1D)
     # This can be a single user input, maybe in a textbox to define lenght of test.
-    Arrays_Of_Array2D = 2
+    Arrays_Of_Array2D = 1
 
     # Initializes the dimensions of the multidimensional array using Arrays_Of_Array2D as the amount of arrays
     # And with Unum_List as the elements every array in the multidimensional array will contain.
