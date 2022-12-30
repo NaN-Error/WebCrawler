@@ -5,7 +5,7 @@ from Modules.Reusable_Modules.OS_Files_Manager import Clear_Files # Local module
 
 # Check which functions can be reused, and move them to Reusable_Modules.Functions or similar, rethink when building new program functionality.
 
-def Brute_Force():# Main function - Checks which webpages exist, using brute force.
+def Brute_Force():# 1. - Checks which webpages exist, using brute force.
     
     # gui  
     # continue? if data stored, if yes, continue, if not, clear_files(), else #works with both url maker and url lookup.
@@ -42,9 +42,9 @@ def Brute_Force():# Main function - Checks which webpages exist, using brute for
     print("____________________________________________END____________________________________________________")
 
 
-def Initializing_Arrays(Unum_List): # Brute_Force Sub function - Initializes Array2D and URL_Subdirectory_Test(Array1D)
+def Initializing_Arrays(Unum_List): # 1.2 - Initializes Array2D and URL_Subdirectory_Test(Array1D)
     # This can be a single user input, maybe in a textbox to define lenght of test.
-    Arrays_Of_Array2D = 1
+    Arrays_Of_Array2D = 2
 
     # Initializes the dimensions of the multidimensional array using Arrays_Of_Array2D as the amount of arrays
     # And with Unum_List as the elements every array in the multidimensional array will contain.
@@ -76,7 +76,7 @@ def Initializing_Arrays(Unum_List): # Brute_Force Sub function - Initializes Arr
     return Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test
 
 
-def Start_URL_Tests(Unum_List, Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test): # Brute_Force Sub function - Evaluates every combination of selected characters.
+def Start_URL_Tests(Unum_List, Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test): # 1.3 - Evaluates every combination of selected characters.
     
     # For testing purposes.
     Iteration_Count = 0 
@@ -131,49 +131,65 @@ def Start_URL_Tests(Unum_List, Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test
             Check_URL(url) 
             
             print("___________________________________________________________________________________________________")
-                    
+            
+            #si todos los elementos de urlsubdir son el ultimo valor de array2d, end.
+            
+            # first option: on while increasing i to get to the next array, if all arrays has the last value, then end.
+            # second option: on array declaration function, create a variable initialized with the value of the last URL_Subdirectory_Test. e.x. 99999 if its 5 arrays.
+            
+            
+            #if URL_Subdirectory_Test[] or URL_Subdirectory == Arrays_Of_Array2D-1:
+                #print("end")
+                #pass #has to end program if i has reached its end. also make 1d and 2d arrays empty again.
+            #either here or inside while increasing.
             if j == len(Unum_List)-1: #si llega al final, va al proximo array, si es 9 va al proximo array etc etc y si no es 9, aumenta 1 e i-- j =0 so on hasta que i =0
-                if i == Arrays_Of_Array2D-1:
-                    print("end")
-                    break #has to end program if i has reached its end.
-                else:
-                    IsZero, i = Increase_To_Next_Option(i, j, Arrays_Of_Array2D, URL_Subdirectory_Test, Array2D, Unum_List)
+                IsZero, i = Increase_To_Next_Option(i, j, Arrays_Of_Array2D, URL_Subdirectory_Test, Array2D, Unum_List)
 
 
-def Increase_To_Next_Option(i, j, Arrays_Of_Array2D, URL_Subdirectory_Test, Array2D, Unum_List): # Brute_Force Sub function - Increases to the next combination after reaching last character of array.
+def Increase_To_Next_Option(i, j, Arrays_Of_Array2D, URL_Subdirectory_Test, Array2D, Unum_List): # 1.4 - Increases to the next combination after reaching last character of array.
     print(f"j indeed is equal to {j}")  
-    print(i)
-    i += 1          
-    print(i)
-    while URL_Subdirectory_Test[i] == Unum_List[len(Unum_List) - 1] and i < Arrays_Of_Array2D: #cant be 9, has to be end of biglist. #[i] is actually just the position of URL_Subdirectory_Test[i] and see if contents of that index == 9
-        i += 1 #im using i somewhere that is causing the loop to end at 47, at i end.
+    print(i)    
+    while URL_Subdirectory_Test[i] == Unum_List[len(Unum_List) - 1]: #cant be 9, has to be end of biglist. #[i] is actually just the position of URL_Subdirectory_Test[i] and see if contents of that index == 9
+        if i < Arrays_Of_Array2D:
+            i += 1 #im using i somewhere that is causing the loop to end at 47, at i end.
+            print(i)
+            print(Arrays_Of_Array2D)
+        if i == Arrays_Of_Array2D:
+            print("end")
+            break #its going to the while's else? or looping in the for.
         #add a hasbeenincreased var to do an if yes then ReinitializeArrto0 to avoid execution of function every time.
-    if URL_Subdirectory_Test[i] == "":
-        URL_Subdirectory_Test[i] = Array2D[i][0]
-        #this can be put outside of the for to optimize efficiency but needs initialize previous arrays to 0 function instead
-        # of the break.
-        #call function (inizialize previous arrays to 0)
-        Reinitialize_Arrays_To_Zero(URL_Subdirectory_Test, Array2D, i, j)
-        #changed to b, didnt ran thru a first. move this to if inside for.    
-    #look up Array2D[i][j] #if not 9, use a 
+        #if i == Arrays_Of_Array2D-1:
+            #print("end")
+            #break #has to end program if i has reached its end. also make 1d and 2d arrays empty again.
     else:
-        for l in range(len(Unum_List)): #compares#to compare contents of Array2D[i][j] with URL_Subdirectory_Test[i] and if same, then increases Array2D[i][l+1] and stores it in URL_Subdirectory_Test[i])
-            if URL_Subdirectory_Test[i] == Array2D[i][l]: #compare contents of Array2D[i][j] with URL_Subdirectory_Test[i] and if same, then 
-                URL_Subdirectory_Test[i] = Array2D[i][l+1]#issue here is that WURLTSTS is initialized with "" so it doesnt have anything to compare with.
-                #inside of for, but can be an if, instead of elif. needs == "" if to be changed as recommended.
-                
-                print("Character to add: ", end="")
-                print(URL_Subdirectory_Test[i])
-                
-                print("Entire string: ", end="")    
-                for k in range(len(URL_Subdirectory_Test)):
-                    print(URL_Subdirectory_Test[k], end="")
-                break
-        Reinitialize_Arrays_To_Zero(URL_Subdirectory_Test, Array2D, i, j)
+        print("not end")
+        if URL_Subdirectory_Test[i] == "":
+            URL_Subdirectory_Test[i] = Array2D[i][0]
+            #this can be put outside of the for to optimize efficiency but needs initialize previous arrays to 0 function instead
+            # of the break.
+            #call function (inizialize previous arrays to 0)
+            Reinitialize_Arrays_To_Zero(URL_Subdirectory_Test, Array2D, i, j)
+            #changed to b, didnt ran thru a first. move this to if inside for.    
+        #look up Array2D[i][j] #if not 9, use a 
+        else:
+            for l in range(len(Unum_List)): #compares#to compare contents of Array2D[i][j] with URL_Subdirectory_Test[i] and if same, then increases Array2D[i][l+1] and stores it in URL_Subdirectory_Test[i])
+                if URL_Subdirectory_Test[i] == Array2D[i][l]: #compare contents of Array2D[i][j] with URL_Subdirectory_Test[i] and if same, then 
+                    URL_Subdirectory_Test[i] = Array2D[i][l+1]#issue here is that WURLTSTS is initialized with "" so it doesnt have anything to compare with.
+                    #inside of for, but can be an if, instead of elif. needs == "" if to be changed as recommended.
+                    
+                    print("Character to add: ", end="")
+                    print(URL_Subdirectory_Test[i])
+                    
+                    print("Entire string: ", end="")    
+                    for k in range(len(URL_Subdirectory_Test)):
+                        print(URL_Subdirectory_Test[k], end="")
+                    break
+            Reinitialize_Arrays_To_Zero(URL_Subdirectory_Test, Array2D, i, j)
+    
     return True, 0
 
 
-def Reinitialize_Arrays_To_Zero(URL_Subdirectory_Test, Array2D, i, j): # Brute_Force Sub function - Reusable - Inizialize previous arrays to 0
+def Reinitialize_Arrays_To_Zero(URL_Subdirectory_Test, Array2D, i, j): # 1.5 - Reusable - Inizialize previous arrays to 0
     while i != 0: # Goes from the index before the one modified, to the first index(index 0)
         i -= 1
         URL_Subdirectory_Test[i] = Array2D[i][0] # Substitutes current index value with index 0 value("a if a is the first index of the list")
@@ -185,7 +201,7 @@ def Reinitialize_Arrays_To_Zero(URL_Subdirectory_Test, Array2D, i, j): # Brute_F
         print(f"j equals : {j}")
 
 
-def E_Ploribus_Unum(): # Reusable - Returns a list with lower, upper, number and special characters, as selected.
+def E_Ploribus_Unum(): # Reusable(1.1) - Returns a list with lower, upper, number and special characters, as selected.
     # Can be checkbox input for user to select which ones to include in tests.
     
     Alphabet_Lowercase = list(string.ascii_lowercase)
