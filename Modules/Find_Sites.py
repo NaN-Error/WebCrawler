@@ -28,8 +28,10 @@ def Brute_Force():# 1. - Checks which webpages exist, using brute force.
 
     print("___________________________________________START___________________________________________________")
 
+    
     # Evaluates every combination of selected characters.
     Start_URL_Tests(Unum_List, Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test)
+    
 
     print("____________________________________________END____________________________________________________")
 
