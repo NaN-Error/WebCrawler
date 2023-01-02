@@ -2,10 +2,28 @@ import string # To get the characters and numbers to create the URLs.
 import time # To get the execution time of the program.
 from Modules.Reusable_Modules.WebTest import Check_URL # Local module. To check each URL created, store the ones online, and store Web error messages, if any.
 from Modules.Reusable_Modules.OS_Files_Manager import Clear_Files # Local module. Deletes files created in previous runs.
-
+import sys
+import io
+import tkinter as tk
 # Check which functions can be reused, and move them to Reusable_Modules.Functions or similar, rethink when building new program functionality.
 
-def Brute_Force():# 1. - Checks which webpages exist, using brute force.
+# # Redirect the output of the print statements to a StringIO object
+# output = io.StringIO()
+# sys.stdout = output
+        
+        
+# # Reset sys.stdout
+# sys.stdout = sys.__stdout__
+
+# # Return the output as a string
+# return output.getvalue()
+
+
+
+def Brute_Force(text_widget):# 1. - Checks which webpages exist, using brute force.
+    # Redirect the output of the print statements to a StringIO object
+    output = io.StringIO()
+    sys.stdout = output
     
     # gui  
     # continue? if data stored, if yes, continue, if not, clear_files(), else #works with both url maker and url lookup.
@@ -42,7 +60,11 @@ def Brute_Force():# 1. - Checks which webpages exist, using brute force.
     print()  
 
     print("____________________________________________END____________________________________________________")
-
+    # Return the output as a string
+    #return output.getvalue()
+    # Reset sys.stdout
+    sys.stdout = sys.__stdout__
+    text_widget.insert(tk.END, output.getvalue())
 
 def Initializing_Arrays(Unum_List): # 1.2 - Initializes Array2D and URL_Subdirectory_Test(Array1D)
     # This can be a single user input, maybe in a textbox to define lenght of test.
@@ -227,6 +249,7 @@ def E_Ploribus_Unum(): # Reusable(1.1) - Returns a list with lower, upper, numbe
     #return Alphabet_Lowercase + Alphabet_Uppercase + Numbers_List + Special_Characters # The elements that each Array2D of the multidimensiona Array2D will have.
 
     return Numbers_List  #+ Special_Characters # Temp return for testing purposes.
+
 
 
 #def websiteurlinput (): gui to request website url, checks if url has / at the end if not, adds it, returns url to functions that needs this input(bruteforce, linkfinder, brokenlinks) - Reusable

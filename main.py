@@ -1,15 +1,80 @@
 import time # To get the execution time of the program.
 Start_Program_Time = time.time()
 import Modules.Find_Sites # Local module. Contains unclassified functions used by main.
+import tkinter as tk
 
+#rethink, why do I need tkinter for? 
 
-choice = 1 # Will be an input. Will make a gui with options where 1 is Brute Force check for webpages in a website.
-if choice == 1:
-    Modules.Find_Sites.Brute_Force()
+# Create the main window
+window = tk.Tk()
+window.title("Radio Button Example")
+
+# Set the size and position of the main window
+screen_width = window.winfo_screenwidth()
+screen_height = window.winfo_screenheight()
+window_width = screen_width // 2
+window_height = screen_height // 2
+window_x = screen_width // 2 - window_width // 2
+window_y = screen_height // 2 - window_height // 2
+
+# Set the size and position of the new window
+window.geometry(f"{window_width}x{window_height}+{window_x}+{window_y}")
+
+# Create a Tkinter variable to store the selected radiobutton
+choice = tk.StringVar()
+
+# Create the radiobuttons
+radiobutton1 = tk.Radiobutton(window, text="1. Find webpages of a website using bf", variable=choice, value="radiobutton1")
+radiobutton2 = tk.Radiobutton(window, text="2. Find all links of a website", variable=choice, value="radiobutton2")
+
+# Pack the radiobuttons
+radiobutton1.pack(side=tk.TOP, anchor=tk.CENTER)
+radiobutton2.pack(side=tk.TOP, anchor=tk.CENTER)
+
+# Create a button to store the selected radiobutton
+def store_choice():
+    selected_choice = choice.get()
+    
+    if selected_choice == "radiobutton1":
+        
+        # Create a new window to display the selected radiobutton and the output of the test function
+        new_window = tk.Tk()
+        new_window.title("Selection")
+
+        # Set the size and position of the new window
+        new_window.geometry(f"{window_width}x{window_height}+{window_x}+{window_y}")
+        
+        # Call the test function and display its output in a Text widget with a Scrollbar
+        text = tk.Text(new_window)
+        text.pack(side=tk.LEFT)
+        scrollbar = tk.Scrollbar(new_window)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        text.config(yscrollcommand=scrollbar.set)
+        scrollbar.config(command=text.yview)
+        
+        # Call the test function and pass the Text widget as an argument
+        Modules.Find_Sites.Brute_Force(text)
+        
+        # Bind the <Configure> event to a function that resizes the Text widget
+        def resize(event):
+            text.config(width=event.width, height=event.height)
+        new_window.bind("<Configure>", resize)
+            
+    elif selected_choice == "radiobutton2":
+        pass
+
+button = tk.Button(window, text="Start", command=store_choice)
+button.pack(side=tk.TOP, anchor=tk.CENTER)
+
+# Run the main loop
+window.mainloop()
 
 
 End_Program_Time = time.time()
 print("Time to compile:", round(End_Program_Time - Start_Program_Time, 4), "seconds.")
+
+
+
 
 #_________________________________________________COMMENTS_________________________________________________
 
