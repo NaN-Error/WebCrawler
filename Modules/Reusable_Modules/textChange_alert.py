@@ -1,3 +1,14 @@
+""""
+This code defines a simple graphical user interface (GUI) using the tkinter library that allows the user to enter a URL and search text, 
+and then searches the HTML of the webpage at the specified URL for the search text. If the search text is found, the webpage is opened in a new tab in the Chrome web browser. 
+
+If the search text is not found, a popup message is displayed. The requests library is used to access the webpage at the specified URL, 
+and the re (regular expression) library is used to search the HTML for the search text. 
+
+The webbrowser library is used to open the webpage in a new tab in the Chrome web browser.
+"""
+
+
 import requests
 import re
 import tkinter.messagebox as tk
