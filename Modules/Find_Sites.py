@@ -21,10 +21,7 @@ import tkinter as tk
 
 
 def Brute_Force():# 1. - Checks which webpages exist, using brute force.
-    # Redirect the output of the print statements to a StringIO object
-    output = io.StringIO()
-    sys.stdout = output
-    
+
     # gui  
     # continue? if data stored, if yes, continue, if not, clear_files(), else #works with both url maker and url lookup.
     # calls websiteurlinput() # asks website url. look at the end of code.
@@ -60,11 +57,7 @@ def Brute_Force():# 1. - Checks which webpages exist, using brute force.
     print()  
 
     print("____________________________________________END____________________________________________________")
-    # Return the output as a string
-    #return output.getvalue()
-    # Reset sys.stdout
-    sys.stdout = sys.__stdout__
-    text_widget.insert(tk.END, output.getvalue())
+
 
 def Initializing_Arrays(Unum_List): # 1.2 - Initializes Array2D and URL_Subdirectory_Test(Array1D)
     # This can be a single user input, maybe in a textbox to define lenght of test.

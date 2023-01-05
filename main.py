@@ -1,8 +1,8 @@
 import time # To get the execution time of the program.
 Start_Program_Time = time.time()
-import Modules.Find_Sites # Local module. Contains unclassified functions used by main.
-import Modules.textChange_alert
 import tkinter as tk
+import Modules.Find_Sites
+import Modules.textChange_alert
 
 #rethink, why do I need tkinter for? 
 
@@ -39,12 +39,11 @@ def store_choice():
     selected_choice = choice.get()
     
     if selected_choice == "radiobutton1":
-        # Call the rute_Force function 
         Modules.Find_Sites.Brute_Force()
     elif selected_choice == "radiobutton2":
         pass
     elif selected_choice == "radiobutton3":
-        Modules.textChange_alert
+        Modules.textChange_alert.main()
 
 button = tk.Button(window, text="Start", command=store_choice)
 button.pack(side=tk.TOP, anchor=tk.CENTER)
