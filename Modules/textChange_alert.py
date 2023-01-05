@@ -18,7 +18,16 @@ import webbrowser
 import urllib.parse
 import threading
 
+
+# from pathlib import Path 
+# Main_Path = Path("")
+# import sys
+# sys.path.insert(0, 'Main_Path')
+# from main import main
+
+
 def main():
+
     # Define a function to start the search
     def start():
         # Disable the "Start" button
@@ -52,7 +61,19 @@ def main():
         else:
             # If any entry widget is empty, disable the "Start" button
             start_button.config(state='disabled')
-
+    
+    # Define a function to validate the input in the entry widgets
+    def validate_input(new_input):
+        # Return True if the new input is a number, False otherwise
+        return bool(only_numbers_regex.match(new_input))
+    
+    # Define a function to check if the URL has a valid structure
+    def check_url(url):
+        try:
+            result = urllib.parse.urlparse(url)
+            return all([result.scheme, result.netloc])
+        except ValueError:
+            return False
 
     # Create the main window
     window = tk.Tk()
@@ -90,11 +111,6 @@ def main():
     # Create a regular expression to match only digits
     only_numbers_regex = re.compile(r'^\d+$')
 
-    # Define a function to validate the input in the entry widgets
-    def validate_input(new_input):
-        # Return True if the new input is a number, False otherwise
-        return bool(only_numbers_regex.match(new_input))
-
     # Set the 'validate' and 'validatecommand' options of the entry widgets
     first_retry_entry = tk.Entry(window, validate='key', validatecommand=(window.register(validate_input), '%P'))
     last_retry_entry = tk.Entry(window, validate='key', validatecommand=(window.register(validate_input), '%P'))
@@ -108,14 +124,6 @@ def main():
 
     # Bind the <KeyRelease> event of the last_retry_entry widget to the check_entry_inputs() function
     last_retry_entry.bind('<KeyRelease>', check_entry_inputs)
-
-    # Define a function to check if the URL has a valid structure
-    def check_url(url):
-        try:
-            result = urllib.parse.urlparse(url)
-            return all([result.scheme, result.netloc])
-        except ValueError:
-            return False
 
     # Create a button to start the search
     start_button = tk.Button(window, text="Start", state='disabled', command=start)

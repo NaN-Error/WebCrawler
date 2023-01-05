@@ -6,56 +6,60 @@ import Modules.textChange_alert
 Start_Program_Time = time.time()
 
 
-# Create the main window
-window = tk.Tk()
-window.title("Radio Button Example")
+def main():
 
-# Set the size and position of the main window
-screen_width = window.winfo_screenwidth()
-screen_height = window.winfo_screenheight()
-window_width = screen_width // 2
-window_height = screen_height // 2
-window_x = screen_width // 2 - window_width // 2
-window_y = screen_height // 2 - window_height // 2
+    # Create the main window
+    window = tk.Tk()
+    window.title("Radio Button Example")
 
-# Set the size and position of the new window
-window.geometry(f"{window_width}x{window_height}+{window_x}+{window_y}")
+    # Set the size and position of the main window
+    screen_width = window.winfo_screenwidth()
+    screen_height = window.winfo_screenheight()
+    window_width = screen_width // 2
+    window_height = screen_height // 2
+    window_x = screen_width // 2 - window_width // 2
+    window_y = screen_height // 2 - window_height // 2
 
-# Create a Tkinter variable to store the selected radiobutton
-choice = tk.StringVar()
+    # Set the size and position of the new window
+    window.geometry(f"{window_width}x{window_height}+{window_x}+{window_y}")
 
-# Create the radiobuttons
-radiobutton1 = tk.Radiobutton(window, text="1. Find webpages of a website using brute force.", variable=choice, value="radiobutton1")
-radiobutton2 = tk.Radiobutton(window, text="2. Find all links of a website.", variable=choice, value="radiobutton2")
-radiobutton3 = tk.Radiobutton(window, text="3. Lookup a keyword in a webpage and open it when the keyword appears.", variable=choice, value="radiobutton3")
+    # Create a Tkinter variable to store the selected radiobutton
+    choice = tk.StringVar()
 
-# Pack the radiobuttons
-radiobutton1.pack(side=tk.TOP, anchor=tk.CENTER)
-radiobutton2.pack(side=tk.TOP, anchor=tk.CENTER)
-radiobutton3.pack(side=tk.TOP, anchor=tk.CENTER)
+    # Create the radiobuttons
+    radiobutton1 = tk.Radiobutton(window, text="1. Find webpages of a website using brute force.", variable=choice, value="radiobutton1")
+    radiobutton2 = tk.Radiobutton(window, text="2. Find all links of a website.", variable=choice, value="radiobutton2")
+    radiobutton3 = tk.Radiobutton(window, text="3. Lookup a keyword in a webpage and open it when the keyword appears.", variable=choice, value="radiobutton3")
 
-# Create a button to store the selected radiobutton
-def store_choice():
-    selected_choice = choice.get()
+    # Pack the radiobuttons
+    radiobutton1.pack(side=tk.TOP, anchor=tk.CENTER)
+    radiobutton2.pack(side=tk.TOP, anchor=tk.CENTER)
+    radiobutton3.pack(side=tk.TOP, anchor=tk.CENTER)
+
+    # Create a button to store the selected radiobutton
+    def select_option():
+        selected_choice = choice.get()
+        window.destroy()
+        if selected_choice == "radiobutton1":
+            Modules.Find_Sites.Brute_Force()
+        elif selected_choice == "radiobutton2":
+            pass
+        elif selected_choice == "radiobutton3":
+            Modules.textChange_alert.main()
+
+    button = tk.Button(window, text="Start", command=select_option)
+    button.pack(side=tk.TOP, anchor=tk.CENTER)
     
-    if selected_choice == "radiobutton1":
-        Modules.Find_Sites.Brute_Force()
-    elif selected_choice == "radiobutton2":
-        pass
-    elif selected_choice == "radiobutton3":
-        Modules.textChange_alert.main()
+    # Run the main loop
+    window.mainloop()
 
-button = tk.Button(window, text="Start", command=store_choice)
-button.pack(side=tk.TOP, anchor=tk.CENTER)
 
-# Run the main loop
-window.mainloop()
-
+main()
 
 End_Program_Time = time.time()
 print("Time to compile:", round(End_Program_Time - Start_Program_Time, 4), "seconds.")
 
-
+exit()
 
 
 #_________________________________________________COMMENTS_________________________________________________

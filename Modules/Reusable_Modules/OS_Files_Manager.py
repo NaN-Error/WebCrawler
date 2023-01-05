@@ -12,7 +12,7 @@ If Results is "UnhandledErrors", the message written to the file is "Unhandled E
 
 from pathlib import Path 
 import os 
-import mysql.connector
+#import mysql.connector
 
 
 #Path to the directory where the program stores its files.
