@@ -1,10 +1,10 @@
 import time # To get the execution time of the program.
-Start_Program_Time = time.time()
 import tkinter as tk
 import Modules.Find_Sites
 import Modules.textChange_alert
 
-#rethink, why do I need tkinter for? 
+Start_Program_Time = time.time()
+
 
 # Create the main window
 window = tk.Tk()

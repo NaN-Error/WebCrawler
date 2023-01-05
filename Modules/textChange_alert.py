@@ -19,10 +19,6 @@ import urllib.parse
 import threading
 
 def main():
-    
-    # Define a flag variable to control the search loop
-    
-    
     # Define a function to start the search
     def start():
         # Disable the "Start" button
@@ -133,7 +129,6 @@ def main():
     # Define a function to search the HTML for the search text
     def search():
         
-        global search_active
         search_active = True
         # Get the URL, search text, and retry intervals from the Entry widgets
         url = url_entry.get()
