@@ -20,7 +20,7 @@ import tkinter as tk
 
 
 
-def Brute_Force(text_widget):# 1. - Checks which webpages exist, using brute force.
+def Brute_Force():# 1. - Checks which webpages exist, using brute force.
     # Redirect the output of the print statements to a StringIO object
     output = io.StringIO()
     sys.stdout = output

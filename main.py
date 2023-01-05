@@ -1,6 +1,7 @@
 import time # To get the execution time of the program.
 Start_Program_Time = time.time()
 import Modules.Find_Sites # Local module. Contains unclassified functions used by main.
+import Modules.textChange_alert
 import tkinter as tk
 
 #rethink, why do I need tkinter for? 
@@ -24,44 +25,26 @@ window.geometry(f"{window_width}x{window_height}+{window_x}+{window_y}")
 choice = tk.StringVar()
 
 # Create the radiobuttons
-radiobutton1 = tk.Radiobutton(window, text="1. Find webpages of a website using bf", variable=choice, value="radiobutton1")
-radiobutton2 = tk.Radiobutton(window, text="2. Find all links of a website", variable=choice, value="radiobutton2")
+radiobutton1 = tk.Radiobutton(window, text="1. Find webpages of a website using brute force.", variable=choice, value="radiobutton1")
+radiobutton2 = tk.Radiobutton(window, text="2. Find all links of a website.", variable=choice, value="radiobutton2")
+radiobutton3 = tk.Radiobutton(window, text="3. Lookup a keyword in a webpage and open it when the keyword appears.", variable=choice, value="radiobutton3")
 
 # Pack the radiobuttons
 radiobutton1.pack(side=tk.TOP, anchor=tk.CENTER)
 radiobutton2.pack(side=tk.TOP, anchor=tk.CENTER)
+radiobutton3.pack(side=tk.TOP, anchor=tk.CENTER)
 
 # Create a button to store the selected radiobutton
 def store_choice():
     selected_choice = choice.get()
     
     if selected_choice == "radiobutton1":
-        
-        # Create a new window to display the selected radiobutton and the output of the test function
-        new_window = tk.Tk()
-        new_window.title("Selection")
-
-        # Set the size and position of the new window
-        new_window.geometry(f"{window_width}x{window_height}+{window_x}+{window_y}")
-        
-        # Call the test function and display its output in a Text widget with a Scrollbar
-        text = tk.Text(new_window)
-        text.pack(side=tk.LEFT)
-        scrollbar = tk.Scrollbar(new_window)
-        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-        text.config(yscrollcommand=scrollbar.set)
-        scrollbar.config(command=text.yview)
-        
-        # Call the test function and pass the Text widget as an argument
-        Modules.Find_Sites.Brute_Force(text)
-        
-        # Bind the <Configure> event to a function that resizes the Text widget
-        def resize(event):
-            text.config(width=event.width, height=event.height)
-        new_window.bind("<Configure>", resize)
-            
+        # Call the rute_Force function 
+        Modules.Find_Sites.Brute_Force()
     elif selected_choice == "radiobutton2":
         pass
+    elif selected_choice == "radiobutton3":
+        Modules.textChange_alert
 
 button = tk.Button(window, text="Start", command=store_choice)
 button.pack(side=tk.TOP, anchor=tk.CENTER)
