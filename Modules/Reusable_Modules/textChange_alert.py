@@ -163,3 +163,34 @@ def search():
 
 # Run the main loop of the Tkinter GUI
 window.mainloop()
+
+# import requests
+# from bs4 import BeautifulSoup
+
+# # Access the webpage
+# response = requests.get(url)
+# html = response.text
+
+# # Parse the HTML
+# soup = BeautifulSoup(html, 'html.parser')
+
+# # Search for the CAPTCHA element
+# captcha_element = soup.find(id='captcha-form')
+
+# if captcha_element:
+#     # CAPTCHA element was found
+#     print("CAPTCHA found")
+# else:
+#     # CAPTCHA element was not found
+#     print("CAPTCHA not found")
+# This code will search the HTML for an element with the id captcha-form and print "CAPTCHA found" if the element is found, or "CAPTCHA not found" if it is not found. You can modify the code to search for other elements or classes that may indicate the presence of a CAPTCHA.
+
+# Keep in mind that this approach may not always be reliable, as the webpage may use a CAPTCHA that is not detected by this method or may use other methods to block automated access to the webpage.
+
+# captcha
+# g-recaptcha
+# captcha-form
+# captcha-input
+# captcha-image
+
+
