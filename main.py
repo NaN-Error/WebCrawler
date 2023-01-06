@@ -12,6 +12,7 @@ def main():
     window = tk.Tk()
     window.title("Radio Button Example")
 
+    #can be made a reusable function for main.py, textChage_alert.py, Brute_Force.py, etc for next ones.
     # Set the size and position of the main window
     screen_width = window.winfo_screenwidth()
     screen_height = window.winfo_screenheight()

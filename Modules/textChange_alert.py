@@ -97,7 +97,6 @@ def main(): #change name or
     # Set the pack_propagate option of the window widget to False
     window.pack_propagate(False)
 
-    
     # Set the size and position of the main window
     screen_width = window.winfo_screenwidth()
     screen_height = window.winfo_screenheight()
