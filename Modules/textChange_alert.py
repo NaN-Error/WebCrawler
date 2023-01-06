@@ -130,6 +130,8 @@ def main(): #change name or
     retry_label = tk.Label(window, text="Enter the retry intervals (in seconds):")
     retry_label.pack()
 
+    #fix not allowing to erase inputs and new inputs slides to the right.
+    #make first and last be side by side, smaller, same as buttons.
     # Create a regular expression to match only digits
     only_numbers_regex = re.compile(r'^\d+$')
 

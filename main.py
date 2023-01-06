@@ -27,6 +27,7 @@ def main():
     # Create a Tkinter variable to store the selected radiobutton
     choice = tk.StringVar()
 
+    #make radiobuttons aligned left
     # Create the radiobuttons
     radiobutton1 = tk.Radiobutton(window, text="1. Find webpages of a website using brute force.", variable=choice, value="radiobutton1")
     radiobutton2 = tk.Radiobutton(window, text="2. Find all links of a website.", variable=choice, value="radiobutton2")
