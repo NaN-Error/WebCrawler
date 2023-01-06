@@ -97,12 +97,17 @@ def main(): #change name or
     # Set the pack_propagate option of the window widget to False
     window.pack_propagate(False)
 
-    # Get the screen width and height
+    
+    # Set the size and position of the main window
     screen_width = window.winfo_screenwidth()
     screen_height = window.winfo_screenheight()
+    window_width = screen_width // 2
+    window_height = screen_height // 2
+    window_x = screen_width // 2 - window_width // 2
+    window_y = screen_height // 2 - window_height // 2
 
-    # Set the window size to 50% of the screen size
-    window.geometry(f"{screen_width//2}x{screen_height//2}")
+    # Set the size and position of the new window
+    window.geometry(f"{window_width}x{window_height}+{window_x}+{window_y}")
 
     # Create a Label and an Entry widget to request the URL
     url_label = tk.Label(window, text="Enter the URL:")
