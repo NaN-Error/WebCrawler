@@ -12,45 +12,60 @@ import random
 import time
 import requests
 import re
-import tkinter.messagebox as messagebox
 import tkinter as tk
 import webbrowser
 import urllib.parse
 import threading
 
 
-# from pathlib import Path 
-# Main_Path = Path("")
-# import sys
-# sys.path.insert(0, 'Main_Path')
-# from main import main
-
-
-def main():
-
+def main(): #change name or 
+    
+    Start_Program_Time = time.time()
     # Define a function to start the search
     def start():
+        
+        # Get the URL from the url_entry widget
+        url = url_entry.get()
+        # Check if the URL is valid
+        if not check_url(url):
+            # If the URL is invalid, show an error message and return
+            text_widget.insert('end', f'ERROR: Invalid URL\n')
+            return
+
+        # Clear the textbox
+        text_widget.delete("1.0", "end")
+
         # Disable the "Start" button
         start_button.config(state='disabled')
 
         # Enable the "Stop" button
         stop_button.config(state='normal')
 
-        # Run the search() function in a separate thread
-        thread = threading.Thread(target=search)
+        # Run the search() function in a separate thread, passing the url argument
+        thread = threading.Thread(target=search, args=(url,))
         thread.start()
 
     # Define a function to stop the search
     def stop():
+        # Use the after() method to schedule the enable_start_button() function to be run in the main thread
+        window.after(0, enable_start_button)
+
+        # Set the search_active flag to False
+        global search_active
+        search_active = False
+        global stopped_by_user
+        stopped_by_user = True
+        
+        # Use the after() method to schedule the insertion of the text in the text widget to be run in the main thread
+        text_widget.after(0, text_widget.insert, 'end', 'Search canceled by user.')
+        text_widget.see(tk.END)
+
+    def enable_start_button():
         # Enable the "Start" button
         start_button.config(state='normal')
 
         # Disable the "Stop" button
         stop_button.config(state='disabled')
-
-        # Set the search_active flag to False
-        global search_active
-        search_active = False
         
     # Define a function to check if every entry widget has some input
     def check_entry_inputs(event=None):
@@ -78,6 +93,9 @@ def main():
     # Create the main window
     window = tk.Tk()
     window.title("Search Webpage")
+
+    # Set the pack_propagate option of the window widget to False
+    window.pack_propagate(False)
 
     # Get the screen width and height
     screen_width = window.winfo_screenwidth()
@@ -134,42 +152,100 @@ def main():
     stop_button.pack()
 
 
-    # Define a function to search the HTML for the search text
-    def search():
-        
-        search_active = True
-        # Get the URL, search text, and retry intervals from the Entry widgets
-        url = url_entry.get()
+    # Create a Text widget and a Scrollbar widget
+    text_widget = tk.Text(window)
+    scrollbar = tk.Scrollbar(text_widget, orient='vertical', command=text_widget.yview)
+
+    # Set the yscrollcommand of the Text widget to the set method of the Scrollbar widget
+    text_widget['yscrollcommand'] = scrollbar.set
+
+    # Pack the Scrollbar widget and the Text widget
+    text_widget.pack(side='left', fill='both', expand=True)
+    scrollbar.pack(side='right', fill='y')
+    
+    # Define the search() function to append the search information to the Text widget
+    def search(url):
+        # Initialize the search attempt counter
+        attempt = 1
+
+        # Get the search text and retry intervals from the entry widgets
         search_text = search_text_entry.get()
         first_retry = int(first_retry_entry.get())
         last_retry = int(last_retry_entry.get())
 
-        # User agent string
-        headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36'}
+        # Set the search_active flag to True
+        global search_active
+        search_active = True
+        
+        global stopped_by_user
+        stopped_by_user = False
+        
+        while search_active:
+            # Generate a random interval of time within the retry intervals
+            retry_interval = random.randint(first_retry, last_retry)
 
-        # Check if the URL has a valid structure
-        if check_url(url):
-            while search_active:
-                # Send a GET request to the URL with the spoofed user agent string
-                response = requests.get(url, headers=headers)
+            # Append the search information to the Text widget
+            text_widget.insert('end', f'Attempt {attempt}: Searching for "{search_text}" in {url[:25]}...{url[-20:]}\n')
+            
+            
+            lines = text_widget.get(1.0, tk.END).strip("\n")
+            
+            
+            #save everything from the text_widget, then create a loop, 
+            time_left = retry_interval
+            
+            
+            while time_left >= 0 and stopped_by_user == False:
+                text_widget.delete(1.0, tk.END)
+                text_widget.insert('end', f'{lines}\n')
+                text_widget.insert('end', f'Waiting for {time_left} seconds\n')#instead of retry_interval, make it timeretry
+                text_widget.see(tk.END)
+                time_left -= 1
+                # Wait for the random interval of time
+                time.sleep(1.0) #make it 1 second insted of retry_interval
+                #needs to be interrupted by the stop button
+                    #can be done using flag or checking the last text in the text widget and compare it in the while... or
+            
 
-                # Check if the search text is found in the HTML
+            # Send a GET request to the URL
+            try:
+                response = requests.get(url)
+                    # Search the content of the webpage for the search text
                 if search_text in response.text:
-                    # If the search text is found, open the URL in a new tab in Chrome
-                    webbrowser.register('chrome', None, webbrowser.BackgroundBrowser(r"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"))
-                    webbrowser.get('chrome').open_new_tab(url)
-
-                    # Stop the search
+                    End_Program_Time = time.time()
+                    # If the search text is found, open the webpage in the default web browser
+                    webbrowser.open(url)      
+                    text_widget.delete(1.0, tk.END)
+                    text_widget.insert('end', f'Search finished. \n\nText "{search_text}" found on {url}\n\n')
+                    text_widget.insert('end', f'Time to complete search: {int(End_Program_Time - Start_Program_Time)} seconds.\nNumber of attempts: {attempt}\n')
+                    
+                    # Set the search_active flag to False to stop the search
                     search_active = False
-                else:
-                    # If the search text is not found, wait for a random amount of time between the first and last retry intervals (in seconds) before trying again
-                    time.sleep(random.randint(first_retry, last_retry))
-        else:
-            # If the URL has an invalid structure, show an error message
-            messagebox.showerror("Error", "The URL has an invalid structure")
+                    
+                    # Disable the "Start" button
+                    start_button.config(state='normal')
 
-    # Run the main loop of the Tkinter GUI
+                    # Enable the "Stop" button
+                    stop_button.config(state='disabled')
+                else:
+                    if stopped_by_user == False:
+                        text_widget.delete(1.0, tk.END)
+                        text_widget.insert('end', f'{lines}\n')
+                        text_widget.insert('end', f'Text "{search_text}" not found on {url[:25]}...{url[-20:]}\n')#instead of retry_interval, make it timeretry
+                        text_widget.insert('end', f'Retrying...\n\n')#instead of retry_interval, make it timeretry
+                        text_widget.see(tk.END)
+            except Exception as e:
+                # If the request fails, display an error message and continue with the next attempt
+                text_widget.insert('end', f'ERROR: {e}\n')
+            
+            # Increment the attempt counter
+            attempt += 1
+
+        # Run the main loop of the Tkinter GUI
+    
+    window.bind('<Return>', lambda event: start_button.invoke())
     window.mainloop()
+
 
 # import requests
 # from bs4 import BeautifulSoup

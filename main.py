@@ -1,7 +1,7 @@
 import time # To get the execution time of the program.
 import tkinter as tk
-import Modules.Find_Sites
-import Modules.textChange_alert
+import tkinter.messagebox as messagebox
+from Modules import Brute_Force, textChange_alert
 
 Start_Program_Time = time.time()
 
@@ -41,11 +41,12 @@ def main():
         selected_choice = choice.get()
         window.destroy()
         if selected_choice == "radiobutton1":
-            Modules.Find_Sites.Brute_Force()
+            Brute_Force.main()
         elif selected_choice == "radiobutton2":
-            pass
+            messagebox.showinfo("Alert", "This function is still in process.")
+            main()
         elif selected_choice == "radiobutton3":
-            Modules.textChange_alert.main()
+            textChange_alert.main()
 
     button = tk.Button(window, text="Start", command=select_option)
     button.pack(side=tk.TOP, anchor=tk.CENTER)

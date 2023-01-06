@@ -18,9 +18,10 @@ import tkinter as tk
 # # Return the output as a string
 # return output.getvalue()
 
+#add a gui to input 
 
 
-def Brute_Force():# 1. - Checks which webpages exist, using brute force.
+def main():# 1. - Checks which webpages exist, using brute force.
 
     # gui  
     # continue? if data stored, if yes, continue, if not, clear_files(), else #works with both url maker and url lookup.
