@@ -19,7 +19,7 @@ import os
 Databases_Path = Path("Databases/")
 
 def Clear_Files(): 
-    # Check if the file exists and remove it if it does.
+    # Checks if the file exists, and remove it if it does.
     if os.path.isfile(Databases_Path / 'Online.txt'):
         os.remove(Databases_Path / 'Online.txt')
     if os.path.isfile(Databases_Path / 'UnhandledCodes.txt'):
@@ -36,7 +36,7 @@ url: String - The URL that was checked.
 getcode_url: String - The HTTP status code received when checking the URL.
 Unhandled_Error: Object - An unhandled error that occurred while checking the URL.
 """
-    # Check the result of the URL check and store it in the corresponding file.
+    # Checks the result of the URL check, and store it in the corresponding file.
     if Results == "Online":
         with open(Databases_Path / 'Online.txt', 'a') as f:
             f.write("Webpage: ")

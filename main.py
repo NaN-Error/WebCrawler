@@ -10,7 +10,7 @@ def select_option(window, choice):
     selected_choice = choice.get()
     window.destroy()
     if selected_choice == "radiobutton1":
-        Brute_Force.main()
+        Brute_Force.gui()
     elif selected_choice == "radiobutton2":
         messagebox.showinfo("Alert", "This function is still in process.")
         main_window()
@@ -18,10 +18,8 @@ def select_option(window, choice):
         textChange_alert.main()
 
 def main_window():
-
-    # Initialize main window.
     window = tk.Tk()
-    window.title("Radio Button Example")
+    window.title("Choose an option")
 
     #can be made a reusable function for main.py, textChage_alert.py, Brute_Force.py, etc for next ones.
     # Set the size and position of the main window
@@ -56,7 +54,7 @@ def main_window():
     window.mainloop()
 
 
-main_window()
+Brute_Force.gui()
 
 End_Program_Time = time.time()
 print("Time to compile:", round(End_Program_Time - Start_Program_Time, 4), "seconds.")

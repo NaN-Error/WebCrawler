@@ -17,32 +17,35 @@ import webbrowser
 import urllib.parse
 import threading
 
+# comments update following from line 48
+
 # The main function holds the gui that calls the rest of the functions. If the gui needs to be in an independent function, it would need to pass the parameters to all the other
 # functions. The gui doesnt need to be on an independent fuction, so everything can be put inside a main function that contains both the gui and the other functions so no parameters
 # needs to be passed. It works the same either way.
 
-def main(): #change name or 
+def main():
     
     Start_Program_Time = time.time()
-    # Define a function to start the search
+    # Starts the search
     def start():
-        
-        # Get the URL from the url_entry widget
+        # Gets the URL from the url_entry widget
         url = url_entry.get()
-        # Check if the URL is valid
+        # Checks if the URL is invalid. if so, shows an error message and returns
         if not check_url(url):
-            # If the URL is invalid, show an error message and return
             text_widget.insert('end', f'ERROR: Invalid URL\n')
             return
 
-        # Clear the textbox
+        # If the URL is valid, the program does the following:
+        
+        # Clears the textbox
         text_widget.delete("1.0", "end")
+        # Disables the Start button and enables the Stop button.
         disable_start_button()
-        # Run the search() function in a separate thread, passing the url argument
+        # Runs the search() function in a separate thread (to avoid the gui get stuck in a loop and freeze) and passes the url argument
         thread = threading.Thread(target=search, args=(url,))
         thread.start()
 
-    # Define a function to stop the search
+    # Stops the search
     def stop():
         # Use the after() method to schedule the enable_start_button() function to be run in the main thread
         window.after(0, enable_start_button)
