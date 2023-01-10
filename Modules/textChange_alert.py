@@ -17,6 +17,7 @@ import webbrowser
 import urllib.parse
 import threading
 
+#create a function for initializing the gui, the main window. take out everything else, similar to brute force structure. remove/rename comments.
 
 def main(): #change name or 
     
@@ -34,13 +35,7 @@ def main(): #change name or
 
         # Clear the textbox
         text_widget.delete("1.0", "end")
-
-        # Disable the "Start" button
-        start_button.config(state='disabled')
-
-        # Enable the "Stop" button
-        stop_button.config(state='normal')
-
+        disable_start_button()
         # Run the search() function in a separate thread, passing the url argument
         thread = threading.Thread(target=search, args=(url,))
         thread.start()
@@ -60,13 +55,26 @@ def main(): #change name or
         text_widget.after(0, text_widget.insert, 'end', 'Search canceled by user.')
         text_widget.see(tk.END)
 
+    # Enables the "Start" button and disables the "Stop" button. Used when the "Stop" button is pressed.
     def enable_start_button():
-        # Enable the "Start" button
         start_button.config(state='normal')
-
-        # Disable the "Stop" button
         stop_button.config(state='disabled')
         
+        url_entry.config(state='normal')
+        search_text_entry.config(state='normal')
+        first_retry_entry.config(state='normal')
+        last_retry_entry.config(state='normal')
+    
+    
+    def disable_start_button():
+        start_button.config(state='disabled')
+        stop_button.config(state='normal')
+        
+        url_entry.config(state='disabled')
+        search_text_entry.config(state='disabled')
+        first_retry_entry.config(state='disabled')
+        last_retry_entry.config(state='disabled')
+    
     # Define a function to check if every entry widget has some input
     def check_entry_inputs(event=None):
         # Check if every entry widget has some input
@@ -80,6 +88,8 @@ def main(): #change name or
     # Define a function to validate the input in the entry widgets
     def validate_input(new_input):
         # Return True if the new input is a number, False otherwise
+        if new_input == "":
+            return True
         return bool(only_numbers_regex.match(new_input))
     
     # Define a function to check if the URL has a valid structure
@@ -89,85 +99,6 @@ def main(): #change name or
             return all([result.scheme, result.netloc])
         except ValueError:
             return False
-
-    # Create the main window
-    window = tk.Tk()
-    window.title("Search Webpage")
-
-    # Set the pack_propagate option of the window widget to False
-    window.pack_propagate(False)
-
-    # Set the size and position of the main window
-    screen_width = window.winfo_screenwidth()
-    screen_height = window.winfo_screenheight()
-    window_width = screen_width // 2
-    window_height = screen_height // 2
-    window_x = screen_width // 2 - window_width // 2
-    window_y = screen_height // 2 - window_height // 2
-
-    # Set the size and position of the new window
-    window.geometry(f"{window_width}x{window_height}+{window_x}+{window_y}")
-
-    # Create a Label and an Entry widget to request the URL
-    url_label = tk.Label(window, text="Enter the URL:")
-    url_label.pack()
-    url_entry = tk.Entry(window)
-    url_entry.pack()
-
-    # Bind the <KeyRelease> event of the url_entry widget to the check_entry_inputs() function
-    url_entry.bind('<KeyRelease>', check_entry_inputs)
-
-    # Create a Label and an Entry widget to request the search text
-    search_text_label = tk.Label(window, text="Enter the search text:")
-    search_text_label.pack()
-    search_text_entry = tk.Entry(window)
-    search_text_entry.pack()
-
-    # Bind the <KeyRelease> event of the search_text_entry widget to the check_entry_inputs() function
-    search_text_entry.bind('<KeyRelease>', check_entry_inputs)
-
-    # Create a Label and two Entry widgets to request the retry intervals
-    retry_label = tk.Label(window, text="Enter the retry intervals (in seconds):")
-    retry_label.pack()
-
-    #fix not allowing to erase inputs and new inputs slides to the right.
-    #make first and last be side by side, smaller, same as buttons.
-    # Create a regular expression to match only digits
-    only_numbers_regex = re.compile(r'^\d+$')
-
-    # Set the 'validate' and 'validatecommand' options of the entry widgets
-    first_retry_entry = tk.Entry(window, validate='key', validatecommand=(window.register(validate_input), '%P'))
-    last_retry_entry = tk.Entry(window, validate='key', validatecommand=(window.register(validate_input), '%P'))
-
-    # Pack the entry widgets
-    first_retry_entry.pack()
-    last_retry_entry.pack()
-
-    # Bind the <KeyRelease> event of the first_retry_entry widget to the check_entry_inputs() function
-    first_retry_entry.bind('<KeyRelease>', check_entry_inputs)
-
-    # Bind the <KeyRelease> event of the last_retry_entry widget to the check_entry_inputs() function
-    last_retry_entry.bind('<KeyRelease>', check_entry_inputs)
-
-    # Create a button to start the search
-    start_button = tk.Button(window, text="Start", state='disabled', command=start)
-    start_button.pack()
-
-    # Create a button to stop the search
-    stop_button = tk.Button(window, text="Stop", state='disabled', command=stop)
-    stop_button.pack()
-
-
-    # Create a Text widget and a Scrollbar widget
-    text_widget = tk.Text(window)
-    scrollbar = tk.Scrollbar(text_widget, orient='vertical', command=text_widget.yview)
-
-    # Set the yscrollcommand of the Text widget to the set method of the Scrollbar widget
-    text_widget['yscrollcommand'] = scrollbar.set
-
-    # Pack the Scrollbar widget and the Text widget
-    text_widget.pack(side='left', fill='both', expand=True)
-    scrollbar.pack(side='right', fill='y')
     
     # Define the search() function to append the search information to the Text widget
     def search(url):
@@ -193,13 +124,10 @@ def main(): #change name or
             # Append the search information to the Text widget
             text_widget.insert('end', f'Attempt {attempt}: Searching for "{search_text}" in {url[:25]}...{url[-20:]}\n')
             
-            
             lines = text_widget.get(1.0, tk.END).strip("\n")
-            
             
             #save everything from the text_widget, then create a loop, 
             time_left = retry_interval
-            
             
             while time_left >= 0 and stopped_by_user == False:
                 text_widget.delete(1.0, tk.END)
@@ -212,7 +140,6 @@ def main(): #change name or
                 #needs to be interrupted by the stop button
                     #can be done using flag or checking the last text in the text widget and compare it in the while... or
             
-
             # Send a GET request to the URL
             try:
                 response = requests.get(url)
@@ -228,11 +155,7 @@ def main(): #change name or
                     # Set the search_active flag to False to stop the search
                     search_active = False
                     
-                    # Disable the "Start" button
-                    start_button.config(state='normal')
-
-                    # Enable the "Stop" button
-                    stop_button.config(state='disabled')
+                    disable_start_button()
                 else:
                     if stopped_by_user == False:
                         text_widget.delete(1.0, tk.END)
@@ -246,12 +169,85 @@ def main(): #change name or
             
             # Increment the attempt counter
             attempt += 1
-
-        # Run the main loop of the Tkinter GUI
     
-    window.bind('<Return>', lambda event: start_button.invoke())
-    window.mainloop()
+    # Create the main window
+    window = tk.Tk()
+    window.title("Search Webpage")
 
+    # Set the pack_propagate option of the window widget to False
+    window.pack_propagate(False)
+
+    # Set the size and position of the main window
+    screen_width = window.winfo_screenwidth()
+    screen_height = window.winfo_screenheight()
+    window_width = screen_width // 2
+    window_height = screen_height // 2
+    window_x = screen_width // 2 - window_width // 2
+    window_y = screen_height // 2 - window_height // 2
+
+    # Set the size and position of the new window
+    window.geometry(f"{window_width}x{window_height}+{window_x}+{window_y}")
+
+    # Create a Label and an Entry widget to request the URL
+    url_label = tk.Label(window, text="Enter the URL:")
+    url_label.pack()
+    url_entry = tk.Entry(window)
+    url_entry.pack()
+
+    # Create a Label and an Entry widget to request the search text
+    search_text_label = tk.Label(window, text="Enter the search text:")
+    search_text_label.pack()
+    search_text_entry = tk.Entry(window)
+    search_text_entry.pack()
+
+    # Create a Label and two Entry widgets to request the retry intervals
+    retry_label = tk.Label(window, text="Enter the retry intervals (in seconds):")
+    retry_label.pack()
+
+    #fix not allowing to erase inputs and new inputs slides to the right.
+    #make first and last be side by side, smaller, same as buttons.
+    # Create a regular expression to match only digits
+    only_numbers_regex = re.compile(r'^\d+$')
+
+    # Set the 'validate' and 'validatecommand' options of the entry widgets
+    first_retry_entry = tk.Entry(window, validate='key', validatecommand=(window.register(validate_input), '%P'))
+    last_retry_entry = tk.Entry(window, validate='key', validatecommand=(window.register(validate_input), '%P'))
+
+    # Pack the entry widgets
+    first_retry_entry.pack()
+    last_retry_entry.pack()
+
+    # Create a button to start the search
+    start_button = tk.Button(window, text="Start", state='disabled', command=start)
+    start_button.pack()
+
+    # Create a button to stop the search
+    stop_button = tk.Button(window, text="Stop", state='disabled', command=stop)
+    stop_button.pack()
+
+    # Create a Text widget and a Scrollbar widget
+    text_widget = tk.Text(window)
+    scrollbar = tk.Scrollbar(text_widget, orient='vertical', command=text_widget.yview)
+
+    # Set the yscrollcommand of the Text widget to the set method of the Scrollbar widget
+    text_widget['yscrollcommand'] = scrollbar.set
+
+    # Pack the Scrollbar widget and the Text widget
+    text_widget.pack(side='left', fill='both', expand=True)
+    scrollbar.pack(side='right', fill='y')
+    
+    # Checks for inputs in the textboxes url_entry, search_text_entry, first_retry_entry and last_retry_entry 
+    url_entry.bind('<KeyRelease>', check_entry_inputs)
+    search_text_entry.bind('<KeyRelease>', check_entry_inputs)
+    first_retry_entry.bind('<KeyRelease>', check_entry_inputs)
+    last_retry_entry.bind('<KeyRelease>', check_entry_inputs)
+    
+    # Binds the Enter key to the Start button so Enter can be pressed to start the program.
+    window.bind('<Return>', lambda event: start_button.invoke())
+    
+    window.mainloop()
+    
+main()
 
 # import requests
 # from bs4 import BeautifulSoup

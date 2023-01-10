@@ -5,10 +5,21 @@ from Modules import Brute_Force, textChange_alert
 
 Start_Program_Time = time.time()
 
+# Create a button to store the selected radiobutton
+def select_option(window, choice):
+    selected_choice = choice.get()
+    window.destroy()
+    if selected_choice == "radiobutton1":
+        Brute_Force.main()
+    elif selected_choice == "radiobutton2":
+        messagebox.showinfo("Alert", "This function is still in process.")
+        main_window()
+    elif selected_choice == "radiobutton3":
+        textChange_alert.main()
 
-def main():
+def main_window():
 
-    # Create the main window
+    # Initialize main window.
     window = tk.Tk()
     window.title("Radio Button Example")
 
@@ -38,29 +49,18 @@ def main():
     radiobutton2.pack(side=tk.TOP, anchor=tk.CENTER)
     radiobutton3.pack(side=tk.TOP, anchor=tk.CENTER)
 
-    # Create a button to store the selected radiobutton
-    def select_option():
-        selected_choice = choice.get()
-        window.destroy()
-        if selected_choice == "radiobutton1":
-            Brute_Force.main()
-        elif selected_choice == "radiobutton2":
-            messagebox.showinfo("Alert", "This function is still in process.")
-            main()
-        elif selected_choice == "radiobutton3":
-            textChange_alert.main()
-
-    button = tk.Button(window, text="Start", command=select_option)
+    button = tk.Button(window, text="Start", command=lambda: select_option(window, choice))
     button.pack(side=tk.TOP, anchor=tk.CENTER)
     
     # Run the main loop
     window.mainloop()
 
 
-main()
+main_window()
 
 End_Program_Time = time.time()
 print("Time to compile:", round(End_Program_Time - Start_Program_Time, 4), "seconds.")
+
 
 exit()
 
