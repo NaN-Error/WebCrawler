@@ -18,8 +18,8 @@ import urllib.parse
 import threading
 
 # The main function holds the gui that calls the rest of the functions. If the gui needs to be in an independent function, it would need to pass the parameters to all the other
-# functions. the gui doesnt need to be on an independent fuction, so everything can be put inside a main function that contains both the gui and the other functions so no parameters
-# needs to be passed.
+# functions. The gui doesnt need to be on an independent fuction, so everything can be put inside a main function that contains both the gui and the other functions so no parameters
+# needs to be passed. It works the same either way.
 
 def main(): #change name or 
     
