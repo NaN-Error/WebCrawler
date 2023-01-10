@@ -145,11 +145,11 @@ def main(): #change name or
                 response = requests.get(url)
                     # Search the content of the webpage for the search text
                 if search_text in response.text:
-                    End_Program_Time = time.time()
                     # If the search text is found, open the webpage in the default web browser
                     webbrowser.open(url)      
                     text_widget.delete(1.0, tk.END)
                     text_widget.insert('end', f'Search finished. \n\nText "{search_text}" found on {url}\n\n')
+                    End_Program_Time = time.time()
                     text_widget.insert('end', f'Time to complete search: {int(End_Program_Time - Start_Program_Time)} seconds.\nNumber of attempts: {attempt}\n')
                     
                     # Set the search_active flag to False to stop the search
@@ -247,7 +247,6 @@ def main(): #change name or
     
     window.mainloop()
     
-main()
 
 # import requests
 # from bs4 import BeautifulSoup
