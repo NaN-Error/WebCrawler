@@ -44,12 +44,13 @@ def gui():
 
         # If the URL is valid, the program does the following:
         
+        Arrays_Of_Array2D = int(search_text_entry.get())
         # Clears the textbox
         text_widget.delete("1.0", "end")
         # Disables the Start button and enables the Stop button.
         disable_start_button()
         # Runs the search() function in a separate thread (to avoid the gui get stuck in a loop and freeze) and passes the url argument
-        thread = threading.Thread(target=main)
+        thread = threading.Thread(target=main, args=(Arrays_Of_Array2D, url))# i am sending the widget you hotdog head. send the value.
         thread.start()
 
     # Stops the search
@@ -224,9 +225,9 @@ def gui():
     window.mainloop()
     
     
-
-def main():# 1. - Checks which webpages exist, using brute force.
-
+def main(Arrays_Of_Array2D, domain_name):# 1. - Checks which webpages exist, using brute force.
+    print(Arrays_Of_Array2D)
+    print(type(Arrays_Of_Array2D))
     # gui  
     # continue? if data stored, if yes, continue, if not, clear_files(), else #works with both url maker and url lookup.
     # calls websiteurlinput() # asks website url. look at the end of code.
@@ -244,13 +245,13 @@ def main():# 1. - Checks which webpages exist, using brute force.
     Unum_List = E_Ploribus_Unum()
 
     # Initialize Array2D with the amount of arrays specified(Arrays_Of_Array2D), and the elements of every array.
-    Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test = Initializing_Arrays(Unum_List)
+    Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test = Initializing_Arrays(Unum_List, Arrays_Of_Array2D)
 
     print("___________________________________________START___________________________________________________")
 
     
     # Evaluates every combination of selected characters.
-    Start_URL_Tests(Unum_List, Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test)
+    Start_URL_Tests(Unum_List, Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test, domain_name)
     
 
     print("____________________________________________END____________________________________________________")
@@ -264,9 +265,9 @@ def main():# 1. - Checks which webpages exist, using brute force.
     print("____________________________________________END____________________________________________________")
 
 
-def Initializing_Arrays(Unum_List): # 1.2 - Initializes Array2D and URL_Subdirectory_Test(Array1D)
+def Initializing_Arrays(Unum_List, Arrays_Of_Array2D): # 1.2 - Initializes Array2D and URL_Subdirectory_Test(Array1D)
     # This can be a single user input, maybe in a textbox to define lenght of test.
-    Arrays_Of_Array2D = 1
+    
 
     # Initializes the dimensions of the multidimensional array using Arrays_Of_Array2D as the amount of arrays
     # And with Unum_List as the elements every array in the multidimensional array will contain.
@@ -298,7 +299,7 @@ def Initializing_Arrays(Unum_List): # 1.2 - Initializes Array2D and URL_Subdirec
     return Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test
 
 
-def Start_URL_Tests(Unum_List, Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test): # 1.3 - Evaluates every combination of selected characters.
+def Start_URL_Tests(Unum_List, Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test, domain_name): # 1.3 - Evaluates every combination of selected characters.
     
     # For testing purposes.
     Iteration_Count = 0 
@@ -346,7 +347,7 @@ def Start_URL_Tests(Unum_List, Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test
             
             # Creates the complete url to test
             #url can be input variable, and 2nd subdirectory can be added as input variable too
-            url = "https://www.youtube.com/" + URL_Subdirectory #+ "=" 
+            url = domain_name + URL_Subdirectory #+ "=" 
             print("URL =", url)
 
             # If website exist, saves the URL on txt.
