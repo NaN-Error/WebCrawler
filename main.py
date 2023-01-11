@@ -53,7 +53,7 @@ def main_window():
     # Run the main loop
     window.mainloop()
 
-
+#textChange_alert.main()
 Brute_Force.gui()
 
 End_Program_Time = time.time()

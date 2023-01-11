@@ -47,8 +47,7 @@ def main():
 
     # Stops the search
     def stop():
-        # Use the after() method to schedule the enable_start_button() function to be run in the main thread
-        window.after(0, enable_start_button)
+        enable_start_button()
 
         # Set the search_active flag to False
         global search_active
@@ -57,7 +56,7 @@ def main():
         stopped_by_user = True
         
         # Use the after() method to schedule the insertion of the text in the text widget to be run in the main thread
-        text_widget.after(0, text_widget.insert, 'end', 'Search canceled by user.')
+        text_widget.after(0, text_widget.insert, 'end', '----SEARCH CANCELED BY USER----')
         text_widget.see(tk.END)
 
     # Enables the "Start" button and disables the "Stop" button. Used when the "Stop" button is pressed.

@@ -21,9 +21,16 @@ import tkinter as tk
 # # Return the output as a string
 # return output.getvalue()
 
+#visualize it, describe it, code it.
+#make it functional, then improve it.
+#needs redundancies to be removed.
+# gui needs some work
+# prints to gui instead
+# stop button to stop the brute_force check
+#does main goes inside gui substituting def search():? or just a call? how does it affect/interact with the thread call of main?
+# do i have to pass the last textbox of the gui as parameter to the starturltests to append activelly the prints into the gui's?
 #add a gui to input 
 def gui():
-    pass
     # Defining objects of the gui
     
     # textbox to ask for url, error message if it doesnt end on / and if url is not valid.
@@ -31,6 +38,9 @@ def gui():
     # checkboxes to ask for lists to use.
     # needs a button to start(calls main), a button to pause
     # textbox to present progress.
+    
+    #NEEDS TO INCORPORATE WEBTEST AND OSFILESMANAGER INTO HERE...? RECEIVE THE PRINTS INTO WIDGET SOLVES THE ISSUE?
+    #NEEDS TO AUTO SCROLL DOWN.
     
     Start_Program_Time = time.time()
     # Starts the search
@@ -50,13 +60,12 @@ def gui():
         # Disables the Start button and enables the Stop button.
         disable_start_button()
         # Runs the search() function in a separate thread (to avoid the gui get stuck in a loop and freeze) and passes the url argument
-        thread = threading.Thread(target=main, args=(Arrays_Of_Array2D, url))# i am sending the widget you hotdog head. send the value.
+        thread = threading.Thread(target=main, args=(Arrays_Of_Array2D, url))
         thread.start()
 
     # Stops the search
     def stop():
-        # Use the after() method to schedule the enable_start_button() function to be run in the main thread
-        window.after(0, enable_start_button)
+        enable_start_button()
 
         # Set the search_active flag to False
         global search_active
@@ -66,7 +75,7 @@ def gui():
         
         # Use the after() method to schedule the insertion of the text in the text widget to be run in the main thread
         text_widget.see(tk.END)
-        text_widget.after(0, text_widget.insert, 'end', 'Search canceled by user.')
+        text_widget.after(0, text_widget.insert, 'end', '\n\n----SEARCH CANCELED BY USER----.\n\n')
 
     # Enables the "Start" button and disables the "Stop" button. Used when the "Stop" button is pressed.
     def enable_start_button():
@@ -109,13 +118,252 @@ def gui():
         except ValueError:
             return False
     
-    # Define the search() function to append the search information to the Text widget
-    def search(url):
-        # Initialize the search attempt counter
-        attempt = 1
+    
+    def main(Arrays_Of_Array2D, domain_name):# 1. - Checks which webpages exist, using brute force.
+        # gui  
+        # continue? if data stored, if yes, continue, if not, clear_files(), else #works with both url maker and url lookup.
+        # calls websiteurlinput() # asks website url. look at the end of code.
+        # checklist make urls, lookup urls. 
+        # checklist store urls that exist, store url that doesnt exist (db should specify on column "exist" as boolean true false.), store errors founds on urls.
+        
+        
+        # Removes the txt files that contains all the URL's info. 
+        Clear_Files() 
+        # After every run, the txt files needs to be kept for evaluation, so they need to be removed at the beginning of the rerun of the program.
 
-        # Get the search text and retry intervals from the entry widgets
-        search_text = int(search_text_entry.get())
+        text_widget.insert('end', "_____________________________________Initializing_Arrays___________________________________________\n")
+
+        # Assign all the elements of all the lists selected in E_Ploribus_Unum() into Unum_List.
+        Unum_List = E_Ploribus_Unum()
+
+        # Initialize Array2D with the amount of arrays specified(Arrays_Of_Array2D), and the elements of every array.
+        Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test = Initializing_Arrays(Unum_List, Arrays_Of_Array2D)
+
+        text_widget.insert('end', "___________________________________________START___________________________________________________\n")
+
+        
+        # Evaluates every combination of selected characters.
+        Start_URL_Tests(Unum_List, Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test, domain_name)
+        
+
+
+    def Initializing_Arrays(Unum_List, Arrays_Of_Array2D): # 1.2 - Initializes Array2D and URL_Subdirectory_Test(Array1D)
+        # This can be a single user input, maybe in a textbox to define lenght of test.
+        
+
+        # Initializes the dimensions of the multidimensional array using Arrays_Of_Array2D as the amount of arrays
+        # And with Unum_List as the elements every array in the multidimensional array will contain.
+        Array2D = [[0 for i in range(len(Unum_List))] for i in range(Arrays_Of_Array2D)]
+        # Array2D doesnt change or store anything, its only purpose is to scroll thru its elements.
+
+        text_widget.insert('end', "___________________________________________________________________________________________________\n")
+        text_widget.insert('end', "Dimensions of Array2D initialized.\n\n")
+        text_widget.insert('end', f"Count of items inside Array2D 0: {len(Array2D[0])}\n")
+        text_widget.insert('end', "The items inside each Array2D are initialized to 0\n")
+        text_widget.insert('end', f"Count of arrays inside Array2D: {len(Array2D)}\n")
+        text_widget.insert('end', "___________________________________________________________________________________________________\n")
+
+        # Adds the elements of Unum_List to every array of Array2D.
+        for i in range(Arrays_Of_Array2D):
+            for j in range(len(Unum_List)):
+                Array2D[i][j] = Unum_List[j]
+
+        text_widget.insert('end', "___________________________________________________________________________________________________\n")
+        text_widget.insert('end', "Items of Array2D initialized.\n\n")
+        text_widget.insert('end', f"Count of items inside Array2D 0: {len(Array2D[0])}\n")
+        text_widget.insert('end', "The items inside each Array2D are initialized to contain a-z, A-Z, and 0-9\n")
+        text_widget.insert('end', f"Count of arrays inside Array2D: {len(Array2D)}\n")
+        text_widget.insert('end', "___________________________________________________________________________________________________\n")
+        
+        # Creates a 1 dimension array and makes it as long as the amount of arrays in Array2D, and makes every element to be empty "".
+        URL_Subdirectory_Test = [""] * Arrays_Of_Array2D   
+        
+        return Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test
+
+
+    def Start_URL_Tests(Unum_List, Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test, domain_name): # 1.3 - Evaluates every combination of selected characters.
+        # Set the search_active flag to True
+        global search_active
+        search_active = True
+        
+        global stopped_by_user
+        stopped_by_user = False
+        #optimize - remove the following while search active and remove the else break from i < arrays from arrays2d...?
+        
+        while search_active:#this might keep the loop running without ending after completion.
+            
+            # For testing purposes.
+            Iteration_Count = 0 
+
+            # To id when the program should go back to array 1(index 0).
+            IsZero = True 
+            i = 0 
+
+            # While instead of a for. The for didn't allowed to modify i when it was inside another loop and if. # Testing while as a for.
+            while i < Arrays_Of_Array2D: 
+                if stopped_by_user == True:
+                    break
+                i += 1
+                
+                if IsZero == True:
+                    i = 0
+                IsZero = False
+                
+                text_widget.insert('end', "___________________________________________________________________________________________________\n")
+                text_widget.insert('end', f"From i = 0 to i = {Arrays_Of_Array2D - 1}|  {i} = i\n")
+                text_widget.insert('end', "___________________________________________________________________________________________________\n")
+                
+                for j in range(len(Unum_List)):
+                    if stopped_by_user == True:
+                        break
+                    Iteration_Count += 1
+                    
+                    # Clears the contents of the string URL_Subdirectory before using it.
+                    URL_Subdirectory = ""
+                    # Every time URL_Subdirectory_Test is modified, its more efficient and simpler to use a string than an array.
+                    
+                    text_widget.insert('end', '\n')
+                    text_widget.insert('end', f"Iteration # {Iteration_Count}\n")
+                    text_widget.insert('end', f"From j = 0 to j = {len(Unum_List)} - 1 | i = {i} & j = {j}\n")
+                    text_widget.insert('end', "________\n")
+                    text_widget.insert('end', '\n')
+                    
+                    # Most important line in this program. 
+                    URL_Subdirectory_Test[i] = Array2D[i][j]  
+                    # As Array2D changes positioning thru its elements, they are stored on the 1d array. 
+                    # URL_Subdirectory_Test is like an overlay of Array2D that will save the elements Array2D is going thru.
+                    
+                    # Stores all the elements of the list URL_Subdirectory_Test on the string variable URL_Subdirectory
+                    text_widget.insert('end', "URL_Subdirectory_Test = ")
+                    for k in range(len(URL_Subdirectory_Test)): 
+                        text_widget.insert('end', URL_Subdirectory_Test[k])
+                        URL_Subdirectory = URL_Subdirectory + str(URL_Subdirectory_Test[k])
+                    text_widget.insert('end', '\n')
+                    
+                    # Creates the complete url to test
+                    #url can be input variable, and 2nd subdirectory can be added as input variable too
+                    url = domain_name + URL_Subdirectory #+ "=" .
+                    text_widget.insert('end', f'URL = {url}\n')
+                    
+#insert here a focus on end of text_widget
+                    
+                    
+                    
+                    # If website exist, saves the URL on txt.
+                    Check_URL(url) 
+                    
+                    text_widget.insert('end', "___________________________________________________________________________________________________\n")
+                    
+                    #si todos los elementos de urlsubdir son el ultimo valor de array2d, end.
+                    
+                    # first option: on while increasing i to get to the next array, if all arrays has the last value, then end.
+                    # second option: on array declaration function, create a variable initialized with the value of the last URL_Subdirectory_Test. e.x. 99999 if its 5 arrays.
+                    
+                    
+                    #if URL_Subdirectory_Test[] or URL_Subdirectory == Arrays_Of_Array2D-1:
+                        #text_widget.insert('end', "end")
+                        #pass #has to end program if i has reached its end. also make 1d and 2d arrays empty again.
+                    #either here or inside while increasing.
+                    if j == len(Unum_List)-1: #si llega al final, va al proximo array, si es 9 va al proximo array etc etc y si no es 9, aumenta 1 e i-- j =0 so on hasta que i =0
+                        IsZero, i = Increase_To_Next_Option(i, j, Arrays_Of_Array2D, URL_Subdirectory_Test, Array2D, Unum_List)
+                #put this inside the run to only execute after it gets out of the while of i < arrayofarrays2d else:
+            else:
+                text_widget.insert('end', "____________________________________________END____________________________________________________\n")
+
+                text_widget.insert('end', '\n')
+                text_widget.insert('end', f"Count of items inside Array2D[0]: {len(Array2D[0])}\n")
+                text_widget.insert('end', f"Count of arrays inside Array2D: {len(Array2D)}\n")
+                text_widget.insert('end', "\nCompleted.\n")
+                text_widget.insert('end', '\n')  
+
+                text_widget.insert('end', "____________________________________________END____________________________________________________\n")
+                break
+                
+
+
+    def Increase_To_Next_Option(i, j, Arrays_Of_Array2D, URL_Subdirectory_Test, Array2D, Unum_List): # 1.4 - Increases to the next combination after reaching last character of array.
+        text_widget.insert('end', f"j is equal to {j}\n")  
+        text_widget.insert('end', f"i is equal to {i}\n")    
+        while URL_Subdirectory_Test[i] == Unum_List[len(Unum_List) - 1]: #cant be 9, has to be end of biglist. #[i] is actually just the position of URL_Subdirectory_Test[i] and see if contents of that index == 9
+            if i < Arrays_Of_Array2D:
+                i += 1 #im using i somewhere that is causing the loop to end at 47, at i end.
+                text_widget.insert('end', f"i is now equal to {i}\n") 
+                text_widget.insert('end', f"Arrays_Of_Array2D equals to {Arrays_Of_Array2D}\n")
+            if i == Arrays_Of_Array2D:
+                text_widget.insert('end', "end\n")
+                break #its going to the while's else? or looping in the for.
+                #return True, 0
+            #add a hasbeenincreased var to do an if yes then ReinitializeArrto0 to avoid execution of function every time.
+            #if i == Arrays_Of_Array2D-1:
+                #text_widget.insert('end', "end")
+                #break #has to end program if i has reached its end. also make 1d and 2d arrays empty again.
+        else:
+            text_widget.insert('end', "Program not concluded.\n")
+            if URL_Subdirectory_Test[i] == "":
+                URL_Subdirectory_Test[i] = Array2D[i][0]
+                #this can be put outside of the for to optimize efficiency but needs initialize previous arrays to 0 function instead
+                # of the break.
+                #call function (inizialize previous arrays to 0)
+                Reinitialize_Arrays_To_Zero(URL_Subdirectory_Test, Array2D, i, j)
+                #changed to b, didnt ran thru a first. move this to if inside for.    
+            #look up Array2D[i][j] #if not 9, use a 
+            else:
+                for l in range(len(Unum_List)): #compares#to compare contents of Array2D[i][j] with URL_Subdirectory_Test[i] and if same, then increases Array2D[i][l+1] and stores it in URL_Subdirectory_Test[i])
+                    if URL_Subdirectory_Test[i] == Array2D[i][l]: #compare contents of Array2D[i][j] with URL_Subdirectory_Test[i] and if same, then 
+                        URL_Subdirectory_Test[i] = Array2D[i][l+1]#issue here is that WURLTSTS is initialized with "" so it doesnt have anything to compare with.
+                        #inside of for, but can be an if, instead of elif. needs == "" if to be changed as recommended.
+                        
+                        text_widget.insert('end', "Character to add: ")
+                        text_widget.insert('end', f'{URL_Subdirectory_Test[i]}\n')
+                        
+                        text_widget.insert('end', "Entire string: ")    
+                        for k in range(len(URL_Subdirectory_Test)):
+                            text_widget.insert('end', URL_Subdirectory_Test[k])
+                        break
+                Reinitialize_Arrays_To_Zero(URL_Subdirectory_Test, Array2D, i, j)
+        
+        return True, i
+
+
+    def Reinitialize_Arrays_To_Zero(URL_Subdirectory_Test, Array2D, i, j): # 1.5 - Reusable - Inizialize previous arrays to 0
+        while i != 0: # Goes from the index before the one modified, to the first index(index 0)
+            i -= 1
+            URL_Subdirectory_Test[i] = Array2D[i][0] # Substitutes current index value with index 0 value("a if a is the first index of the list")
+            text_widget.insert('end', f'\nValue of i: {URL_Subdirectory_Test[i]}\n')
+            text_widget.insert('end', 'New string: ')
+            for k in range(len(URL_Subdirectory_Test)):
+                text_widget.insert('end', URL_Subdirectory_Test[k])
+            text_widget.insert('end', f'\ni now equals : {i}\n')
+            text_widget.insert('end', f'j now equals : {j}\n')
+
+
+    def E_Ploribus_Unum(): # Reusable(1.1) - Returns a list with lower, upper, number and special characters, as selected.
+        # Can be checkbox input for user to select which ones to include in tests.
+        
+        Alphabet_Lowercase = list(string.ascii_lowercase)
+        text_widget.insert('end', f"Lowercase List: {Alphabet_Lowercase}")
+        text_widget.insert('end', '\n')
+
+        Alphabet_Uppercase = list(string.ascii_uppercase)
+        text_widget.insert('end', f"Uppercase List: {Alphabet_Uppercase}")
+        text_widget.insert('end', '\n')
+
+        Numbers_List = list(string.digits)
+        text_widget.insert('end', f"Number's List: {Numbers_List}")
+        text_widget.insert('end', '\n')
+
+        Special_Characters = list(string.punctuation)
+        text_widget.insert('end', f"Special Characters List: {Special_Characters}")
+        text_widget.insert('end', '\n')
+
+        # Test url lookup with special_characters, see which ones are allowed in url.
+        #return Alphabet_Lowercase + Alphabet_Uppercase + Numbers_List + Special_Characters # The elements that each Array2D of the multidimensiona Array2D will have.
+
+        return Numbers_List  #+ Special_Characters # Temp return for testing purposes.
+
+
+    # Define the search() function to append the search information to the Text widget
+    def search(Arrays_Of_Array2D, url):
 
         # Set the search_active flag to True
         global search_active
@@ -125,41 +373,41 @@ def gui():
         stopped_by_user = False
         
         while search_active:
-
-            # Append the search information to the Text widget
-            text_widget.insert('end', f'Attempt {attempt}: Searching for "{search_text}" in {url[:25]}...{url[-20:]}\n')
+            main(Arrays_Of_Array2D, url)
+            # # Append the search information to the Text widget
+            # text_widget.insert('end', f'Attempt {attempt}: Searching for "{search_text}" in {url[:25]}...{url[-20:]}\n')
             
-            lines = text_widget.get(1.0, tk.END).strip("\n")
+            # lines = text_widget.get(1.0, tk.END).strip("\n")
             
-            # Send a GET request to the URL
-            try:
-                response = requests.get(url)
-                    # Search the content of the webpage for the search text
-                if search_text in response.text:
-                    # If the search text is found, open the webpage in the default web browser
-                    webbrowser.open(url)      
-                    text_widget.delete(1.0, tk.END)
-                    text_widget.insert('end', f'Search finished. \n\nText "{search_text}" found on {url}\n\n')
-                    End_Program_Time = time.time()
-                    text_widget.insert('end', f'Time to complete search: {int(End_Program_Time - Start_Program_Time)} seconds.\nNumber of attempts: {attempt}\n')
+            # # Send a GET request to the URL
+            # try:
+            #     response = requests.get(url)
+            #         # Search the content of the webpage for the search text
+            #     if search_text in response.text:
+            #         # If the search text is found, open the webpage in the default web browser
+            #         webbrowser.open(url)      
+            #         text_widget.delete(1.0, tk.END)
+            #         text_widget.insert('end', f'Search finished. \n\nText "{search_text}" found on {url}\n\n')
+            #         End_Program_Time = time.time()
+            #         text_widget.insert('end', f'Time to complete search: {int(End_Program_Time - Start_Program_Time)} seconds.\nNumber of attempts: {attempt}\n')
                     
-                    # Set the search_active flag to False to stop the search
-                    search_active = False
+            #         # Set the search_active flag to False to stop the search
+            #         search_active = False
                     
-                    disable_start_button()
-                else:
-                    if stopped_by_user == False:
-                        text_widget.delete(1.0, tk.END)
-                        text_widget.insert('end', f'{lines}\n')
-                        text_widget.insert('end', f'Text "{search_text}" not found on {url[:25]}...{url[-20:]}\n')#instead of retry_interval, make it timeretry
-                        text_widget.insert('end', f'Retrying...\n\n')#instead of retry_interval, make it timeretry
-                        text_widget.see(tk.END)
-            except Exception as e:
-                # If the request fails, display an error message and continue with the next attempt
-                text_widget.insert('end', f'ERROR: {e}\n')
+            #         disable_start_button()
+            #     else:
+            #         if stopped_by_user == False:
+            #             text_widget.delete(1.0, tk.END)
+            #             text_widget.insert('end', f'{lines}\n')
+            #             text_widget.insert('end', f'Text "{search_text}" not found on {url[:25]}...{url[-20:]}\n')#instead of retry_interval, make it timeretry
+            #             text_widget.insert('end', f'Retrying...\n\n')#instead of retry_interval, make it timeretry
+            #             text_widget.see(tk.END)
+            # except Exception as e:
+            #     # If the request fails, display an error message and continue with the next attempt
+            #     text_widget.insert('end', f'ERROR: {e}\n')
             
-            # Increment the attempt counter
-            attempt += 1
+            # # Increment the attempt counter
+            # attempt += 1
     
     # Create the main window
     window = tk.Tk()
@@ -225,229 +473,6 @@ def gui():
     window.mainloop()
     
     
-def main(Arrays_Of_Array2D, domain_name):# 1. - Checks which webpages exist, using brute force.
-    print(Arrays_Of_Array2D)
-    print(type(Arrays_Of_Array2D))
-    # gui  
-    # continue? if data stored, if yes, continue, if not, clear_files(), else #works with both url maker and url lookup.
-    # calls websiteurlinput() # asks website url. look at the end of code.
-    # checklist make urls, lookup urls. 
-    # checklist store urls that exist, store url that doesnt exist (db should specify on column "exist" as boolean true false.), store errors founds on urls.
-    
-    
-    # Removes the txt files that contains all the URL's info. 
-    Clear_Files() 
-    # After every run, the txt files needs to be kept for evaluation, so they need to be removed at the beginning of the rerun of the program.
-
-    print("_____________________________________Initializing_Arrays___________________________________________\n")
-
-    # Assign all the elements of all the lists selected in E_Ploribus_Unum() into Unum_List.
-    Unum_List = E_Ploribus_Unum()
-
-    # Initialize Array2D with the amount of arrays specified(Arrays_Of_Array2D), and the elements of every array.
-    Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test = Initializing_Arrays(Unum_List, Arrays_Of_Array2D)
-
-    print("___________________________________________START___________________________________________________")
-
-    
-    # Evaluates every combination of selected characters.
-    Start_URL_Tests(Unum_List, Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test, domain_name)
-    
-
-    print("____________________________________________END____________________________________________________")
-
-    print()
-    print("Count of items inside Array2D[0]:", len(Array2D[0]))
-    print("Count of arrays inside Array2D:", len(Array2D))
-    print("Completed.")
-    print()  
-
-    print("____________________________________________END____________________________________________________")
-
-
-def Initializing_Arrays(Unum_List, Arrays_Of_Array2D): # 1.2 - Initializes Array2D and URL_Subdirectory_Test(Array1D)
-    # This can be a single user input, maybe in a textbox to define lenght of test.
-    
-
-    # Initializes the dimensions of the multidimensional array using Arrays_Of_Array2D as the amount of arrays
-    # And with Unum_List as the elements every array in the multidimensional array will contain.
-    Array2D = [[0 for i in range(len(Unum_List))] for i in range(Arrays_Of_Array2D)]
-    # Array2D doesnt change or store anything, its only purpose is to scroll thru its elements.
-
-    print("___________________________________________________________________________________________________")
-    print("Dimensions of Array2D initialized")
-    print("Count of items inside Array2D 0:", len(Array2D[0]))
-    print("The items inside each Array2D are initialized to 0")
-    print("Count of arrays inside Array2D:", len(Array2D))
-    print("___________________________________________________________________________________________________")
-
-    # Adds the elements of Unum_List to every array of Array2D.
-    for i in range(Arrays_Of_Array2D):
-        for j in range(len(Unum_List)):
-            Array2D[i][j] = Unum_List[j]
-
-    print("___________________________________________________________________________________________________")
-    print("Items of Array2D initialized")
-    print("Count of items inside Array2D 0:", len(Array2D[0]))
-    print("The items inside each Array2D are initialized to contain a-z, A-Z, and 0-9")
-    print("Count of arrays inside Array2D:", len(Array2D))
-    print("___________________________________________________________________________________________________")
-    
-    # Creates a 1 dimension array and makes it as long as the amount of arrays in Array2D, and makes every element to be empty "".
-    URL_Subdirectory_Test = [""] * Arrays_Of_Array2D   
-    
-    return Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test
-
-
-def Start_URL_Tests(Unum_List, Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test, domain_name): # 1.3 - Evaluates every combination of selected characters.
-    
-    # For testing purposes.
-    Iteration_Count = 0 
-
-    # To id when the program should go back to array 1(index 0).
-    IsZero = True 
-    i = 0 
-
-    # While instead of a for. The for didn't allowed to modify i when it was inside another loop and if. # Testing while as a for.
-    while i < Arrays_Of_Array2D: 
-        i += 1
-        
-        if IsZero == True:
-            i = 0
-        IsZero = False
-        
-        print("___________________________________________________________________________________________________")
-        print("From i = 0 to i =", Arrays_Of_Array2D - 1, " |  i =", i)
-        print("___________________________________________________________________________________________________")
-        
-        for j in range(len(Unum_List)):
-            Iteration_Count += 1
-            
-            # Clears the contents of the string URL_Subdirectory before using it.
-            URL_Subdirectory = ""
-            # Every time URL_Subdirectory_Test is modified, its more efficient and simpler to use a string than an array.
-            
-            print("")
-            print("Iteration #", Iteration_Count)
-            print("From j = 0 to j =", len(Unum_List) - 1, "| i =", i, "& j =", j)
-            print("________")
-            print("")
-            
-            # Most important line in this program. 
-            URL_Subdirectory_Test[i] = Array2D[i][j]  
-            # As Array2D changes positioning thru its elements, they are stored on the 1d array. 
-            # URL_Subdirectory_Test is like an overlay of Array2D that will save the elements Array2D is going thru.
-            
-            # Stores all the elements of the list URL_Subdirectory_Test on the string variable URL_Subdirectory
-            print("URL_Subdirectory_Test = ", end="")
-            for k in range(len(URL_Subdirectory_Test)): 
-                print(URL_Subdirectory_Test[k], end="")
-                URL_Subdirectory = URL_Subdirectory + str(URL_Subdirectory_Test[k])
-            print()
-            
-            # Creates the complete url to test
-            #url can be input variable, and 2nd subdirectory can be added as input variable too
-            url = domain_name + URL_Subdirectory #+ "=" 
-            print("URL =", url)
-
-            # If website exist, saves the URL on txt.
-            Check_URL(url) 
-            
-            print("___________________________________________________________________________________________________")
-            
-            #si todos los elementos de urlsubdir son el ultimo valor de array2d, end.
-            
-            # first option: on while increasing i to get to the next array, if all arrays has the last value, then end.
-            # second option: on array declaration function, create a variable initialized with the value of the last URL_Subdirectory_Test. e.x. 99999 if its 5 arrays.
-            
-            
-            #if URL_Subdirectory_Test[] or URL_Subdirectory == Arrays_Of_Array2D-1:
-                #print("end")
-                #pass #has to end program if i has reached its end. also make 1d and 2d arrays empty again.
-            #either here or inside while increasing.
-            if j == len(Unum_List)-1: #si llega al final, va al proximo array, si es 9 va al proximo array etc etc y si no es 9, aumenta 1 e i-- j =0 so on hasta que i =0
-                IsZero, i = Increase_To_Next_Option(i, j, Arrays_Of_Array2D, URL_Subdirectory_Test, Array2D, Unum_List)
-
-
-def Increase_To_Next_Option(i, j, Arrays_Of_Array2D, URL_Subdirectory_Test, Array2D, Unum_List): # 1.4 - Increases to the next combination after reaching last character of array.
-    print(f"j indeed is equal to {j}")  
-    print(i)    
-    while URL_Subdirectory_Test[i] == Unum_List[len(Unum_List) - 1]: #cant be 9, has to be end of biglist. #[i] is actually just the position of URL_Subdirectory_Test[i] and see if contents of that index == 9
-        if i < Arrays_Of_Array2D:
-            i += 1 #im using i somewhere that is causing the loop to end at 47, at i end.
-            print(i)
-            print(Arrays_Of_Array2D)
-        if i == Arrays_Of_Array2D:
-            print("end")
-            break #its going to the while's else? or looping in the for.
-            return True, 0
-        #add a hasbeenincreased var to do an if yes then ReinitializeArrto0 to avoid execution of function every time.
-        #if i == Arrays_Of_Array2D-1:
-            #print("end")
-            #break #has to end program if i has reached its end. also make 1d and 2d arrays empty again.
-    else:
-        print("not end")
-        if URL_Subdirectory_Test[i] == "":
-            URL_Subdirectory_Test[i] = Array2D[i][0]
-            #this can be put outside of the for to optimize efficiency but needs initialize previous arrays to 0 function instead
-            # of the break.
-            #call function (inizialize previous arrays to 0)
-            Reinitialize_Arrays_To_Zero(URL_Subdirectory_Test, Array2D, i, j)
-            #changed to b, didnt ran thru a first. move this to if inside for.    
-        #look up Array2D[i][j] #if not 9, use a 
-        else:
-            for l in range(len(Unum_List)): #compares#to compare contents of Array2D[i][j] with URL_Subdirectory_Test[i] and if same, then increases Array2D[i][l+1] and stores it in URL_Subdirectory_Test[i])
-                if URL_Subdirectory_Test[i] == Array2D[i][l]: #compare contents of Array2D[i][j] with URL_Subdirectory_Test[i] and if same, then 
-                    URL_Subdirectory_Test[i] = Array2D[i][l+1]#issue here is that WURLTSTS is initialized with "" so it doesnt have anything to compare with.
-                    #inside of for, but can be an if, instead of elif. needs == "" if to be changed as recommended.
-                    
-                    print("Character to add: ", end="")
-                    print(URL_Subdirectory_Test[i])
-                    
-                    print("Entire string: ", end="")    
-                    for k in range(len(URL_Subdirectory_Test)):
-                        print(URL_Subdirectory_Test[k], end="")
-                    break
-            Reinitialize_Arrays_To_Zero(URL_Subdirectory_Test, Array2D, i, j)
-    
-    return True, i
-
-
-def Reinitialize_Arrays_To_Zero(URL_Subdirectory_Test, Array2D, i, j): # 1.5 - Reusable - Inizialize previous arrays to 0
-    while i != 0: # Goes from the index before the one modified, to the first index(index 0)
-        i -= 1
-        URL_Subdirectory_Test[i] = Array2D[i][0] # Substitutes current index value with index 0 value("a if a is the first index of the list")
-        print(f"\nValue of i: {URL_Subdirectory_Test[i]}")
-        print("New string: ", end="")
-        for k in range(len(URL_Subdirectory_Test)):
-            print(URL_Subdirectory_Test[k], end="")
-        print(f"\ni equals : {i}")
-        print(f"j equals : {j}")
-
-
-def E_Ploribus_Unum(): # Reusable(1.1) - Returns a list with lower, upper, number and special characters, as selected.
-    # Can be checkbox input for user to select which ones to include in tests.
-    
-    Alphabet_Lowercase = list(string.ascii_lowercase)
-    print(f"Lowercase List: {Alphabet_Lowercase}")
-    print()
-
-    Alphabet_Uppercase = list(string.ascii_uppercase)
-    print(f"Uppercase List: {Alphabet_Uppercase}")
-    print()
-
-    Numbers_List = list(string.digits)
-    print(f"Number's List: {Numbers_List}")
-    print()
-
-    Special_Characters = list(string.punctuation)
-    print(f"Special Characters List: {Special_Characters}")
-    print()
-
-    # Test url lookup with special_characters, see which ones are allowed in url.
-    #return Alphabet_Lowercase + Alphabet_Uppercase + Numbers_List + Special_Characters # The elements that each Array2D of the multidimensiona Array2D will have.
-
-    return Numbers_List  #+ Special_Characters # Temp return for testing purposes.
 
 
 
