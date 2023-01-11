@@ -1,13 +1,16 @@
 import string # To get the characters and numbers to create the URLs.
 import time # To get the execution time of the program.
-from Modules.Reusable_Modules.WebTest import Check_URL # Local module. To check each URL created, store the ones online, and store Web error messages, if any.
-from Modules.Reusable_Modules.OS_Files_Manager import Clear_Files # Local module. Deletes files created in previous runs.
+from Modules.Reusable_Modules import WebTest # Local module. To check each URL created, store the ones online, and store Web error messages, if any.
+from Modules.Reusable_Modules import OS_Files_Manager # Local module. Deletes files created in previous runs.
 import urllib.parse
-import webbrowser
-import requests
 import re
 import threading
 import tkinter as tk
+
+
+    #NEEDS TO AUTO SCROLL DOWN.
+#text_widget.see(tk.END)
+
 # Check which functions can be reused, and move them to Reusable_Modules.Functions or similar, rethink when building new program functionality.
 
 # # Redirect the output of the print statements to a StringIO object
@@ -74,8 +77,10 @@ def gui():
         stopped_by_user = True
         
         # Use the after() method to schedule the insertion of the text in the text widget to be run in the main thread
+        text_widget.insert('end', "\n____________________________________________END____________________________________________________\n")
+        text_widget.insert('end', "\n\n----SEARCH CANCELED BY USER----.\n\n")
+        text_widget.insert('end', "____________________________________________END____________________________________________________\n")
         text_widget.see(tk.END)
-        text_widget.after(0, text_widget.insert, 'end', '\n\n----SEARCH CANCELED BY USER----.\n\n')
 
     # Enables the "Start" button and disables the "Stop" button. Used when the "Stop" button is pressed.
     def enable_start_button():
@@ -128,7 +133,7 @@ def gui():
         
         
         # Removes the txt files that contains all the URL's info. 
-        Clear_Files() 
+        OS_Files_Manager.Clear_Files() 
         # After every run, the txt files needs to be kept for evaluation, so they need to be removed at the beginning of the rerun of the program.
 
         text_widget.insert('end', "_____________________________________Initializing_Arrays___________________________________________\n")
@@ -185,12 +190,13 @@ def gui():
         # Set the search_active flag to True
         global search_active
         search_active = True
-        
         global stopped_by_user
         stopped_by_user = False
         #optimize - remove the following while search active and remove the else break from i < arrays from arrays2d...?
         
         while search_active:#this might keep the loop running without ending after completion.
+            
+            text_widget.see(tk.END)
             
             # For testing purposes.
             Iteration_Count = 0 
@@ -201,6 +207,9 @@ def gui():
 
             # While instead of a for. The for didn't allowed to modify i when it was inside another loop and if. # Testing while as a for.
             while i < Arrays_Of_Array2D: 
+                
+                text_widget.see(tk.END)
+                
                 if stopped_by_user == True:
                     break
                 i += 1
@@ -208,12 +217,14 @@ def gui():
                 if IsZero == True:
                     i = 0
                 IsZero = False
-                
                 text_widget.insert('end', "___________________________________________________________________________________________________\n")
                 text_widget.insert('end', f"From i = 0 to i = {Arrays_Of_Array2D - 1}|  {i} = i\n")
                 text_widget.insert('end', "___________________________________________________________________________________________________\n")
                 
                 for j in range(len(Unum_List)):
+                    
+                    text_widget.see(tk.END)
+                    
                     if stopped_by_user == True:
                         break
                     Iteration_Count += 1
@@ -250,33 +261,35 @@ def gui():
                     
                     
                     # If website exist, saves the URL on txt.
-                    Check_URL(url) 
                     
-                    text_widget.insert('end', "___________________________________________________________________________________________________\n")
-                    
-                    #si todos los elementos de urlsubdir son el ultimo valor de array2d, end.
-                    
-                    # first option: on while increasing i to get to the next array, if all arrays has the last value, then end.
-                    # second option: on array declaration function, create a variable initialized with the value of the last URL_Subdirectory_Test. e.x. 99999 if its 5 arrays.
-                    
-                    
-                    #if URL_Subdirectory_Test[] or URL_Subdirectory == Arrays_Of_Array2D-1:
-                        #text_widget.insert('end', "end")
-                        #pass #has to end program if i has reached its end. also make 1d and 2d arrays empty again.
-                    #either here or inside while increasing.
-                    if j == len(Unum_List)-1: #si llega al final, va al proximo array, si es 9 va al proximo array etc etc y si no es 9, aumenta 1 e i-- j =0 so on hasta que i =0
-                        IsZero, i = Increase_To_Next_Option(i, j, Arrays_Of_Array2D, URL_Subdirectory_Test, Array2D, Unum_List)
-                #put this inside the run to only execute after it gets out of the while of i < arrayofarrays2d else:
+                    line = WebTest.Check_URL(url)
+                    if stopped_by_user != True:
+                        text_widget.insert('end', f"{line}")
+                        text_widget.insert('end', "___________________________________________________________________________________________________\n")
+                        
+                        #si todos los elementos de urlsubdir son el ultimo valor de array2d, end.
+                        
+                        # first option: on while increasing i to get to the next array, if all arrays has the last value, then end.
+                        # second option: on array declaration function, create a variable initialized with the value of the last URL_Subdirectory_Test. e.x. 99999 if its 5 arrays.
+                        
+                        
+                        #if URL_Subdirectory_Test[] or URL_Subdirectory == Arrays_Of_Array2D-1:
+                            #text_widget.insert('end', "end")
+                            #pass #has to end program if i has reached its end. also make 1d and 2d arrays empty again.
+                        #either here or inside while increasing.
+                        if j == len(Unum_List)-1: #si llega al final, va al proximo array, si es 9 va al proximo array etc etc y si no es 9, aumenta 1 e i-- j =0 so on hasta que i =0
+                            IsZero, i = Increase_To_Next_Option(i, j, Arrays_Of_Array2D, URL_Subdirectory_Test, Array2D, Unum_List)
+                        #put this inside the run to only execute after it gets out of the while of i < arrayofarrays2d else:
             else:
                 text_widget.insert('end', "____________________________________________END____________________________________________________\n")
-
                 text_widget.insert('end', '\n')
                 text_widget.insert('end', f"Count of items inside Array2D[0]: {len(Array2D[0])}\n")
                 text_widget.insert('end', f"Count of arrays inside Array2D: {len(Array2D)}\n")
                 text_widget.insert('end', "\nCompleted.\n")
                 text_widget.insert('end', '\n')  
-
                 text_widget.insert('end', "____________________________________________END____________________________________________________\n")
+                enable_start_button()
+                text_widget.see(tk.END)
                 break
                 
 
@@ -321,7 +334,7 @@ def gui():
                             text_widget.insert('end', URL_Subdirectory_Test[k])
                         break
                 Reinitialize_Arrays_To_Zero(URL_Subdirectory_Test, Array2D, i, j)
-        
+        text_widget.see(tk.END)
         return True, i
 
 
@@ -335,6 +348,7 @@ def gui():
                 text_widget.insert('end', URL_Subdirectory_Test[k])
             text_widget.insert('end', f'\ni now equals : {i}\n')
             text_widget.insert('end', f'j now equals : {j}\n')
+        text_widget.see(tk.END)
 
 
     def E_Ploribus_Unum(): # Reusable(1.1) - Returns a list with lower, upper, number and special characters, as selected.
