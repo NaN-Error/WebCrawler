@@ -7,44 +7,37 @@ import re
 import threading
 import tkinter as tk
 
-
-    #NEEDS TO AUTO SCROLL DOWN.
-#text_widget.see(tk.END)
-
-# Check which functions can be reused, and move them to Reusable_Modules.Functions or similar, rethink when building new program functionality.
-
-# # Redirect the output of the print statements to a StringIO object
-# output = io.StringIO()
-# sys.stdout = output
-        
-        
-# # Reset sys.stdout
-# sys.stdout = sys.__stdout__
-
-# # Return the output as a string
-# return output.getvalue()
-
 #visualize it, describe it, code it.
 #make it functional, then improve it.
-#needs redundancies to be removed.
-# gui needs some work
-# prints to gui instead
-# stop button to stop the brute_force check
-#does main goes inside gui substituting def search():? or just a call? how does it affect/interact with the thread call of main?
-# do i have to pass the last textbox of the gui as parameter to the starturltests to append activelly the prints into the gui's?
+# Check which functions can be reused, and move them to Reusable_Modules.Functions or similar, rethink when building new program functionality.
+# checkboxes to ask for lists to use.
+# needs a button to pause, a button to continue from last test. (clear() function would have to be deleted. Store everything inside a db insead of txt)
+# db used to id the last input. all url test are made, and columns should id if found, if not, if error etc. true false info?
+#needs an intro gui to detect if theres data stored, if to continue last test or start over. start over deletes the db, continue gets last url.
+# can multithreading be used to sort the database while the program is also inputing data on the database? or enter the data in the db in its place so its sorted?
+
+
+# if none of the url column is with lenght arraysofarray2d and with all its elements the last element of Unum
+    # in the last run you were creating the list with which the test were going to be made. do you wish to continue?
+        # no 
+            # starts anew
+        # yes 
+            # gets previous data. needs data to be stored in hard drive. needs a function to store this data, and a function to clear this data.
+# elif 
+    # in the last run you were testing the webpages with the list created. do you wish to continue?
+        # no 
+            # do you want to create a new list?
+                # no > close
+                # yes > start anew
+        # yes > gets db data from those rows who doesnt have data input in its tests rows.
+
+
+
+
+
 #add a gui to input 
 def gui():
     # Defining objects of the gui
-    
-    # textbox to ask for url, error message if it doesnt end on / and if url is not valid.
-    # textbox to ask for lenght
-    # checkboxes to ask for lists to use.
-    # needs a button to start(calls main), a button to pause
-    # textbox to present progress.
-    
-    #NEEDS TO INCORPORATE WEBTEST AND OSFILESMANAGER INTO HERE...? RECEIVE THE PRINTS INTO WIDGET SOLVES THE ISSUE?
-    #NEEDS TO AUTO SCROLL DOWN.
-    
     Start_Program_Time = time.time()
     # Starts the search
     def start():
