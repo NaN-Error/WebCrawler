@@ -9,13 +9,13 @@ import tkinter as tk
 
 #visualize it, describe it, code it.
 #make it functional, then improve it.
-# Check which functions can be reused, and move them to Reusable_Modules.Functions or similar, rethink when building new program functionality.
-# checkboxes to ask for lists to use.
-# needs a button to pause, a button to continue from last test. (clear() function would have to be deleted. Store everything inside a db insead of txt)
-# db used to id the last input. all url test are made, and columns should id if found, if not, if error etc. true false info?
-#needs an intro gui to detect if theres data stored, if to continue last test or start over. start over deletes the db, continue gets last url.
-# can multithreading be used to sort the database while the program is also inputing data on the database? or enter the data in the db in its place so its sorted?
 
+#To do:
+# insert an initial focus on text_widget
+# checkboxes to ask for lists to use.
+# needs a button to pause
+
+# New functions to add after:
 
 # if none of the url column is with lenght arraysofarray2d and with all its elements the last element of Unum
     # in the last run you were creating the list with which the test were going to be made. do you wish to continue?
@@ -31,9 +31,13 @@ import tkinter as tk
                 # yes > start anew
         # yes > gets db data from those rows who doesnt have data input in its tests rows.
 
+# a button to continue from last test. (clear() function would have to be deleted. Store everything inside a db insead of txt)
+# db used to id the last input. all url test are made, and columns should id if found, if not, if error etc. true false info?
+# needs an intro gui to detect if theres data stored, if to continue last test or start over. start over deletes the db, continue gets last url.
+# can multithreading be used to sort the database while the program is also inputing data on the database? or enter the data in the db in its place so its sorted?
 
-
-
+# Check which functions can be reused, and move them to Reusable_Modules.Functions or similar, rethink when building new program functionality.
+# most of gui can probably be reused. check tkinter options to do this.
 
 #add a gui to input 
 def gui():
@@ -249,7 +253,7 @@ def gui():
                     url = domain_name + URL_Subdirectory #+ "=" .
                     text_widget.insert('end', f'URL = {url}\n')
                     
-#insert here a focus on end of text_widget
+#insert a focus on end of text_widget
                     
                     
                     
