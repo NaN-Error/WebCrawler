@@ -19,8 +19,8 @@ import threading
 
 # comments update following from line 48
 
-# The main function holds the gui that calls the rest of the functions. If the gui needs to be in an independent function, it would need to pass the parameters to all the other
-# functions. The gui doesnt need to be on an independent fuction, so everything can be put inside a main function that contains both the gui and the other functions so no parameters
+# The main function holds the gui that calls the rest of the functions. If the gui needs to be in an independent function, it would need to pass the arguments to all the other
+# functions. The gui doesnt need to be on an independent fuction, so everything can be put inside a main function that contains both the gui and the other functions so no arguments
 # needs to be passed. It works the same either way.
 
 def main():
