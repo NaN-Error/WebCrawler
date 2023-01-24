@@ -5,9 +5,3 @@ Unhandled Error: <module 'urllib.error' from 'C:\\Users\\wilba\\AppData\\Local\\
 Unhandled Error: <module 'urllib.error' from 'C:\\Users\\wilba\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\urllib\\error.py'>- Webpage:https://www.youtube.com/5
 Unhandled Error: <module 'urllib.error' from 'C:\\Users\\wilba\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\urllib\\error.py'>- Webpage:https://www.youtube.com/8
 Unhandled Error: <module 'urllib.error' from 'C:\\Users\\wilba\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\urllib\\error.py'>- Webpage:https://www.youtube.com/9
-Unhandled Error: <module 'urllib.error' from 'C:\\Users\\wilba\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\urllib\\error.py'>- Webpage:https://www.youtube.com/00
-Unhandled Error: <module 'urllib.error' from 'C:\\Users\\wilba\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\urllib\\error.py'>- Webpage:https://www.youtube.com/20
-Unhandled Error: <module 'urllib.error' from 'C:\\Users\\wilba\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\urllib\\error.py'>- Webpage:https://www.youtube.com/40
-Unhandled Error: <module 'urllib.error' from 'C:\\Users\\wilba\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\urllib\\error.py'>- Webpage:https://www.youtube.com/80
-Unhandled Error: <module 'urllib.error' from 'C:\\Users\\wilba\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\urllib\\error.py'>- Webpage:https://www.youtube.com/01
-Unhandled Error: <module 'urllib.error' from 'C:\\Users\\wilba\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\urllib\\error.py'>- Webpage:https://www.youtube.com/21

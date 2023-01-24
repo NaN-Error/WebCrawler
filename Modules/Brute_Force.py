@@ -50,8 +50,6 @@ import tkinter as tk
 
 # add a gui to input 
 def gui():
-    # Defining objects of the gui
-    Start_Program_Time = time.time()
     # Starts the search when Start button is pressed.
     def start():
         # Gets the URL from the url_entry widget
@@ -138,6 +136,9 @@ def gui():
     
     # 1. - Checks which webpages exist, using brute force.
     def main(Arrays_Of_Array2D, domain_name):
+        # For testing purposes - stores the time when the program starts - to check execution time. // TO DO - use at sub modules execution instead
+        Start_Program_Time = time.time() 
+        
         # Removes the txt files that contains all the URL's info. 
         # After every run, the txt files needs to be kept for evaluation, so they need to be removed at the beginning of the rerun of the program.
         OS_Files_Manager.Clear_Files() 
@@ -156,6 +157,11 @@ def gui():
         
         # Evaluates every combination of selected characters for the given length.
         Start_URL_Tests(Unum_List, Arrays_Of_Array2D, Array2D, URL_Subdirectory_Test, domain_name)
+        
+        # Substract the current time from the time when the program started to check execution time. // TO DO - use at sub modules execution instead
+        End_Program_Time = time.time()
+        text_widget.insert('end', f'Time to complete search: {int(End_Program_Time - Start_Program_Time)} seconds.')
+        
 
     # 1.2 - Initializes Array2D and URL_Subdirectory_Test(Array1D)
     def Initializing_Arrays(Unum_List, Arrays_Of_Array2D):     
@@ -307,6 +313,7 @@ def gui():
                 text_widget.insert('end', f"Arrays_Of_Array2D equals to {Arrays_Of_Array2D}\n")
             if i == Arrays_Of_Array2D:
                 text_widget.insert('end', "end\n")
+                
                 break 
                 #return True, 0
         else:

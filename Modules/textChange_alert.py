@@ -25,8 +25,6 @@ import threading
 # needs to be passed. The program works either way, but the code is cleaner if gui is put in an independent function.
 
 def main():
-    
-    Start_Program_Time = time.time()
     # Starts the search
     def start():
         # Gets the URL from the url_entry widget
@@ -112,6 +110,9 @@ def main():
     
     # Define the search() function to append the search information to the Text widget
     def search(url):
+        # For testing purposes - stores the time when the program starts - to check execution time. // TO DO - use at sub modules execution instead
+        Start_Program_Time = time.time()
+        
         # Initialize the search attempt counter
         attempt = 1
 
@@ -160,7 +161,7 @@ def main():
                     text_widget.delete(1.0, tk.END)
                     text_widget.insert('end', f'Search finished. \n\nText "{search_text}" found on {url}\n\n')
                     End_Program_Time = time.time()
-                    text_widget.insert('end', f'Time to complete search: {int(End_Program_Time - Start_Program_Time)} seconds.\nNumber of attempts: {attempt}\n')
+                    text_widget.insert('end', f'Number of attempts: {attempt}\nTime to complete search: {int(End_Program_Time - Start_Program_Time)} seconds.\n')
                     
                     # Set the search_active flag to False to stop the search
                     search_active = False
