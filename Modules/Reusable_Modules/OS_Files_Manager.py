@@ -14,12 +14,13 @@ from pathlib import Path
 import os 
 #import mysql.connector
 
+# To do: change txt for db. db should have url(str), found(bool), unhandled_code(str), unhandled_error(str)
 
 #Path to the directory where the program stores its files.
 Databases_Path = Path("Databases/")
 
 def Clear_Files(): 
-    # Checks if the file exists, and remove it if it does.
+    # Checks if the file exists, and remove it if it does. Executed at the beginning of each run to clear the previous stored info.
     if os.path.isfile(Databases_Path / 'Online.txt'):
         os.remove(Databases_Path / 'Online.txt')
     if os.path.isfile(Databases_Path / 'UnhandledCodes.txt'):

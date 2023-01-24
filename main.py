@@ -59,7 +59,6 @@ def main_window():
 #textChange_alert.main()
 Brute_Force.gui()
 
-
 # Substract the current time from the time when the program started to check execution time. // TO DO - use at sub modules execution instead
 End_Program_Time = time.time()
 print("Time to compile:", round(End_Program_Time - Start_Program_Time, 4), "seconds.")

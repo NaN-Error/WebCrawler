@@ -376,7 +376,7 @@ def gui():
     
     # Main window
     window = tk.Tk()
-    window.title("Search Webpage")
+    window.title("Search Webpage - Brute Force")
 
     # Sets the pack_propagate of the window to False in order for it to be able to change its own size
     window.pack_propagate(False)
@@ -402,9 +402,6 @@ def gui():
     length_to_test = tk.Entry(window, validate='key', validatecommand=(window.register(validate_input), '%P'))
     length_to_test.pack()
 
-    # Regular expression to match only digits
-    only_numbers_regex = re.compile(r'^\d+$')
-
     # Button to start the search
     start_button = tk.Button(window, text="Start", state='disabled', command=start)
     start_button.pack()
@@ -421,6 +418,9 @@ def gui():
     text_widget['yscrollcommand'] = scrollbar.set
     text_widget.pack(side='left', fill='both', expand=True)
     scrollbar.pack(side='right', fill='y')
+    
+    # Regular expression to match only digits
+    only_numbers_regex = re.compile(r'^\d+$')
     
     # Checks for inputs in the textboxes url_entry and length_to_test
     url_entry.bind('<KeyRelease>', check_entry_inputs)

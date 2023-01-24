@@ -18,10 +18,11 @@ import urllib.parse
 import threading
 
 # comments update following from line 48
+# To do: add a check for captcha. when url in text or captcha in text, open window. captcha id is variable, might require a list with possible ids to evaluate. Research.
 
 # The main function holds the gui that calls the rest of the functions. If the gui needs to be in an independent function, it would need to pass the arguments to all the other
 # functions. The gui doesnt need to be on an independent fuction, so everything can be put inside a main function that contains both the gui and the other functions so no arguments
-# needs to be passed. It works the same either way.
+# needs to be passed. The program works either way, but the code is cleaner if gui is put in an independent function.
 
 def main():
     
@@ -30,14 +31,13 @@ def main():
     def start():
         # Gets the URL from the url_entry widget
         url = url_entry.get()
-        # Checks if the URL is invalid. if so, shows an error message and returns
+        # Checks if the URL is invalid. if so, shows an error message and goes back to main to wait for user action.
         if not check_url(url):
             text_widget.insert('end', f'ERROR: Invalid URL\n')
             return
 
         # If the URL is valid, the program does the following:
-        
-        # Clears the textbox
+        # Clears the "terminal" textbox(text_widget)
         text_widget.delete("1.0", "end")
         # Disables the Start button and enables the Stop button.
         disable_start_button()
@@ -49,54 +49,60 @@ def main():
     def stop():
         enable_start_button()
 
-        # Set the search_active flag to False
+        # Sets the search_active flag to False - TO DO: reevaluate for redundancies.
         global search_active
         search_active = False
         global stopped_by_user
         stopped_by_user = True
         
-        # Use the after() method to schedule the insertion of the text in the text widget to be run in the main thread
-        text_widget.after(0, text_widget.insert, 'end', '----SEARCH CANCELED BY USER----')
+        # Shows a "Search Canceled by user" message in the text widget when the Stop button is pressed.
+        text_widget.insert('end', "\n____________________________________________END____________________________________________________\n")
+        text_widget.insert('end', "\n\n----SEARCH CANCELED BY USER----.\n\n")
+        text_widget.insert('end', "____________________________________________END____________________________________________________\n")
         text_widget.see(tk.END)
 
-    # Enables the "Start" button and disables the "Stop" button. Used when the "Stop" button is pressed.
+    # Enables the "Start" button and text fields, and disables the "Stop" button when the "Stop" button is pressed and when the program ends.
     def enable_start_button():
+        # Enables Start button/Disables Stop button
         start_button.config(state='normal')
         stop_button.config(state='disabled')
-        
+        # Enables text fields.
         url_entry.config(state='normal')
         search_text_entry.config(state='normal')
         first_retry_entry.config(state='normal')
         last_retry_entry.config(state='normal')
     
-    
+    # Disables the "Start" button and text fields, and enables the "Stop" button when the "Start" button is pressed.
     def disable_start_button():
+        # Disables Start button/Enables Stop button.
         start_button.config(state='disabled')
         stop_button.config(state='normal')
-        
+        # Disables text fields.
         url_entry.config(state='disabled')
         search_text_entry.config(state='disabled')
         first_retry_entry.config(state='disabled')
         last_retry_entry.config(state='disabled')
     
-    # Define a function to check if every entry widget has some input
+    # Function to actively check if every text widget has some input; Start button is enabled if it does and disabled if it doesn't. 
+    # Used by the Bind function to actively check whenever an input is made in the text fields.
     def check_entry_inputs(event=None):
-        # Check if every entry widget has some input
+        # Check if every entry widget has some input.
         if url_entry.get() and search_text_entry.get() and first_retry_entry.get() and last_retry_entry.get():
-            # If every entry widget has some input, enable the "Start" button
+            # If every entry widget has some input, enable the "Start" button.
             start_button.config(state='normal')
         else:
             # If any entry widget is empty, disable the "Start" button
             start_button.config(state='disabled')
     
-    # Define a function to validate the input in the entry widgets
+    # Validate the input for numbers only in the first retry entry and last retry entry textboxes
     def validate_input(new_input):
-        # Return True if the new input is a number, False otherwise
+        # Return True if the new input is blank (to allow deleting all the numbers if wanted), and checks if the new input matches the regex. If matches, returns true, else false.
+        # When True, it allows the input in the textbox, when false, no input is allowed into the textbox.
         if new_input == "":
             return True
         return bool(only_numbers_regex.match(new_input))
     
-    # Define a function to check if the URL has a valid structure
+    # Check if the URL has a valid structure
     def check_url(url):
         try:
             result = urllib.parse.urlparse(url)
@@ -176,69 +182,60 @@ def main():
     
     # Create the main window
     window = tk.Tk()
-    window.title("Search Webpage")
+    window.title("Search Webpage - Text Change Alert")
 
-    # Set the pack_propagate option of the window widget to False
+    # Sets the pack_propagate of the window to False in order for it to be able to change its own size
     window.pack_propagate(False)
 
-    # Set the size and position of the main window
+    # Sets the size and position of the main window
     screen_width = window.winfo_screenwidth()
     screen_height = window.winfo_screenheight()
     window_width = screen_width // 2
     window_height = screen_height // 2
     window_x = screen_width // 2 - window_width // 2
     window_y = screen_height // 2 - window_height // 2
-
-    # Set the size and position of the new window
     window.geometry(f"{window_width}x{window_height}+{window_x}+{window_y}")
 
-    # Create a Label and an Entry widget to request the URL
+    # Creates a Label and a text widget to request the URL
     url_label = tk.Label(window, text="Enter the URL:")
     url_label.pack()
     url_entry = tk.Entry(window)
     url_entry.pack()
 
-    # Create a Label and an Entry widget to request the search text
+    # Creates a Label and a text widget to request the text to search.
     search_text_label = tk.Label(window, text="Enter the search text:")
     search_text_label.pack()
     search_text_entry = tk.Entry(window)
     search_text_entry.pack()
-
-    # Create a Label and two Entry widgets to request the retry intervals
+    
+    # To do: make first and last be side by side, smaller, total size of both same as one button.
+    # Creates a Label and two text widgets to request the retry intervals
     retry_label = tk.Label(window, text="Enter the retry intervals (in seconds):")
     retry_label.pack()
-
-    #fix not allowing to erase inputs and new inputs slides to the right.
-    #make first and last be side by side, smaller, same as buttons.
-    # Create a regular expression to match only digits
-    only_numbers_regex = re.compile(r'^\d+$')
-
-    # Set the 'validate' and 'validatecommand' options of the entry widgets
     first_retry_entry = tk.Entry(window, validate='key', validatecommand=(window.register(validate_input), '%P'))
     last_retry_entry = tk.Entry(window, validate='key', validatecommand=(window.register(validate_input), '%P'))
-
-    # Pack the entry widgets
     first_retry_entry.pack()
     last_retry_entry.pack()
-
-    # Create a button to start the search
+    
+    # Button to start the search
     start_button = tk.Button(window, text="Start", state='disabled', command=start)
     start_button.pack()
 
-    # Create a button to stop the search
+    # Button to stop the search
     stop_button = tk.Button(window, text="Stop", state='disabled', command=stop)
     stop_button.pack()
 
-    # Create a Text widget and a Scrollbar widget
+    # Creates a Text widget and a Scrollbar widget
     text_widget = tk.Text(window)
+    
+    # Sets a scrollbar in the text_widget to scroll thru all the test text
     scrollbar = tk.Scrollbar(text_widget, orient='vertical', command=text_widget.yview)
-
-    # Set the yscrollcommand of the Text widget to the set method of the Scrollbar widget
     text_widget['yscrollcommand'] = scrollbar.set
-
-    # Pack the Scrollbar widget and the Text widget
     text_widget.pack(side='left', fill='both', expand=True)
     scrollbar.pack(side='right', fill='y')
+    
+    # Create a regular expression to match only digits
+    only_numbers_regex = re.compile(r'^\d+$')
     
     # Checks for inputs in the textboxes url_entry, search_text_entry, first_retry_entry and last_retry_entry 
     url_entry.bind('<KeyRelease>', check_entry_inputs)
@@ -246,7 +243,7 @@ def main():
     first_retry_entry.bind('<KeyRelease>', check_entry_inputs)
     last_retry_entry.bind('<KeyRelease>', check_entry_inputs)
     
-    # Binds the Enter key to the Start button so Enter can be pressed to start the program.
+    # Binds the Enter key to the Start button so Enter can be pressed to start the program when all the texboxes has some text.
     window.bind('<Return>', lambda event: start_button.invoke())
     
     window.mainloop()
