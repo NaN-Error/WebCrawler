@@ -16,6 +16,12 @@ import tkinter as tk
 # checkboxes to ask for lists to use.
 # needs a button to pause
 # put functions at the bottom or leave them on top?
+# consider storing every text in a string rather than printing them directly to the gui, then have a function to print the string or insert in textbox
+# this can enable flexibility when choosing where to print the text. could also enable the possibility of another gui using this program e.x. a web app.
+# web gui, tkinter gui. separate program from gui.
+# would also be interesting to make a language package. something simple that comes to mind is to create an array with the texts in a language ex. english[] with the
+# elements being each text line and a spanish[] with the same lines in spanish and then when language chosen, the program copies the array into the programs array that shows
+# the texts. Dictionary is another option.
 
 # New functions to add after:
 
